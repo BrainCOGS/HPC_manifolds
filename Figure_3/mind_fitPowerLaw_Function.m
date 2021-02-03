@@ -1,5 +1,5 @@
 
-function outputFitPowerLaw = mind_fitPowerLaw_Function(fnameStruct, taskType, toggleTrialNormalization)
+function outputFitPowerLaw = mind_fitPowerLaw_Function(fnameStruct, taskType, toggleTrialNormalization, expPlot)
 
 % If toggleTrialNormalization is 1, it will also make the plot with the
 % trials normalized to the mean trial length
@@ -18,14 +18,14 @@ outputFitPowerLaw.fitRange    = fitRange;
 outputFitPowerLaw.toggleTrialNormalization = toggleTrialNormalization;
 
 % For the flag of the linear and polynomial fitting
-flagRange = [3 7];
+flagRange = [3 6];
 config.flagRange = flagRange;
 
 % For the trial length normalization
 xInputs = logspace(log10(0.0001),log10(0.4), 100);
 config.xInputs = xInputs;
 
-expPlot = 5;
+% expPlot = 5;
 config.expPlot = expPlot;
 
 outputFitPowerLaw.config = config;
@@ -96,6 +96,13 @@ for i=1:length(fnameStruct)
     i
 end
 
+mean_l = mean(exponents_l);
+sem_l  = nieh_sem(exponents_l);
+ci_l   = nieh_ci(exponents_l',1000);
+mean_c = mean(exponents_c);
+sem_c  = nieh_sem(exponents_c);
+ci_c   = nieh_ci(exponents_c',1000);
+
 figure;
 subplot(1,2,1)
 hold on;
@@ -105,7 +112,7 @@ for i=1:length(fnameStruct)
 end
 xlabel('log10(d)')
 ylabel('log10(N_neighbors')
-title(['mean: ', num2str(mean(exponents_l)), 'SEM: ', num2str(nieh_sem(exponents_l))])
+title(['mean: ', num2str(mean_l), ' SEM: ', num2str(sem_l), ' CI: [' , num2str(ci_l'), ']'])
 
 subplot(1,2,2)
 hold on;
@@ -115,15 +122,20 @@ for i=1:length(fnameStruct)
 end
 xlabel('d')
 ylabel('N_neighbors')
-title(['mean: ', num2str(mean(exponents_c)), 'SEM: ', num2str(nieh_sem(exponents_c))])
+title(['mean: ', num2str(mean_c), ' SEM: ', num2str(sem_c), ' CI: [' , num2str(ci_c'), ']'])
+set(gcf, 'Position',  [1000, 900, 1300, 400])
 
-disp(['mean: ', num2str(mean(exponents_l)), 'SEM: ', num2str(nieh_sem(exponents_l))])
-disp(['mean: ', num2str(mean(exponents_c)), 'SEM: ', num2str(nieh_sem(exponents_c))])
+% disp(['mean: ', num2str(mean(exponents_l)), 'SEM: ', num2str(nieh_sem(exponents_l))])
+% disp(['mean: ', num2str(mean(exponents_c)), 'SEM: ', num2str(nieh_sem(exponents_c))])
 
 outputFitPowerLaw.exponents_l = exponents_l;
 outputFitPowerLaw.exponents_c = exponents_c;
-outputFitPowerLaw.mean_exp_l  = mean(exponents_l);
-outputFitPowerLaw.sem_exp_l   = nieh_sem(exponents_l);
+outputFitPowerLaw.mean_l  = mean_l;
+outputFitPowerLaw.sem_l   = sem_l;
+outputFitPowerLaw.ci_l    = ci_l;
+outputFitPowerLaw.mean_c  = mean_c;
+outputFitPowerLaw.sem_c   = sem_c;
+outputFitPowerLaw.ci_c    = ci_c;
 
 %% Calculate N as function of distance for all landmarks
 
@@ -204,6 +216,7 @@ if toggleTrialNormalization==1
     xlabel('D/Do');
     % Distance between points in units of length of trial
     ylabel('Average number of neighboring landmarks')
+    title(['Dotted Lines are exponent = ' num2str(expPlot)])
     
     outputFitPowerLaw.tempCs = tempCs;
     outputFitPowerLaw.temptriallength = temptriallength;

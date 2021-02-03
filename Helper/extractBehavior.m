@@ -23,30 +23,50 @@ if isModeling==1
 %% get main trials from log file
 else
     load(fname);
+    
+    for i=1:length(log.block)
+        tempNums = num2cell([log.block(i).firstTrial:(log.block(i).firstTrial-1) + (length(log.block(i).trial))]);
+        [log.block(i).trial.globalTrialID] = tempNums{:};
+    end
+    
     mainBlocks = find([log.block.mazeID]==11 | [log.block.mazeID]==7);
     mainTrials = [log.block(mainBlocks).trial];
+    mainTrials = [mainTrials.globalTrialID];
+    allTrials = [log.block(:).trial];
 end
 
 %%
 
-for i=1:length(mainTrials)
-   tempPos_L{i} = mainTrials(i).cuePos{1};
-   tempPos_R{i} = mainTrials(i).cuePos{2};
-   numL = sum(mainTrials(i).cueCombo(1,:));
-   numR = sum(mainTrials(i).cueCombo(2,:));
+for i=1:length(allTrials)
+   tempPos_L{i} = allTrials(i).cuePos{1};
+   tempPos_R{i} = allTrials(i).cuePos{2};
+   numL = sum(allTrials(i).cueCombo(1,:));
+   numR = sum(allTrials(i).cueCombo(2,:));
    tempRminusL(i) = numR-numL;
+   tempRplusL(i) = numR+numL;
+   
+   position = allTrials(i).position;
+   yposition = position(:,2);
+   collision = allTrials(i).collision;
+   collision1 = find(collision==1);
+   if sum(collision1)==0
+       ypos_collide(i) = 300;
+   else
+       ypos_collide(i) = yposition(collision1(1));
+   end
    
    % Right choice is 1 and left choice is 0
-   tempChoice = mainTrials(i).choice;
+   tempChoice = allTrials(i).choice;
    if tempChoice==1
        tempChoice2(i) = 0;
    elseif tempChoice==2
        tempChoice2(i) = 1;
    else
        tempChoice2(i) = NaN;
+       % disp(['Choice was NaN in: ' fname]);
    end
    
-   tempType = mainTrials(i).trialType;
+   tempType = allTrials(i).trialType;
    if tempType==1
        tempType2(i) = 0;
    elseif tempType==2
@@ -55,23 +75,43 @@ for i=1:length(mainTrials)
        tempType2(i) = NaN;
    end
    
+   if tempType2(i)==tempChoice2(i)
+       tempChoiceCorrect(i) = 1;
+   else
+       tempChoiceCorrect(i) = 0;
+   end
+   
+   if i==1
+       tempPriorChoice(i) = NaN;
+       tempPriorCorrect(i) = NaN;
+   else
+       tempPriorChoice(i) = tempChoice2(i-1);
+       tempPriorCorrect(i) = tempChoiceCorrect(i-1);
+   end
+   
 end
 
-outputBehavior.mouseID = repmat(mouseID, 1, length(mainTrials));
-outputBehavior.date = repmat(date, 1, length(mainTrials));
-outputBehavior.sessionID = repmat(1, 1, length(mainTrials));
+% outputBehavior.mouseID = repmat(mouseID, 1, length(mainTrials));
+% outputBehavior.date = repmat(date, 1, length(mainTrials));
+% outputBehavior.sessionID = repmat(1, 1, length(mainTrials));
 
 %% Get rid of trials where the choice was not made
-keepData = ~isnan(tempChoice2);
+% keepData = ~isnan(tempChoice2);
+keepData = ~isnan(tempChoice2) & ~isnan(tempPriorChoice) & ~isnan(tempPriorCorrect) & ismember([allTrials.globalTrialID], mainTrials);
 
-outputBehavior.mouseID = outputBehavior.mouseID(keepData);
-outputBehavior.date = outputBehavior.date(keepData);
-outputBehavior.sessionID = outputBehavior.sessionID(keepData);
+outputBehavior.mouseID = repmat(mouseID, 1, sum(keepData==1));
+outputBehavior.date = repmat(date, 1, sum(keepData==1));
+outputBehavior.sessionID = repmat(1, 1, sum(keepData==1));
 outputBehavior.cuePos_L = tempPos_L(keepData);
 outputBehavior.cuePos_R = tempPos_R(keepData);
 outputBehavior.choice   = tempChoice2(keepData);
 outputBehavior.trialType = tempType2(keepData);
+outputBehavior.choiceCorrect = tempChoiceCorrect(keepData);
+outputBehavior.priorChoice = tempPriorChoice(keepData);
+outputBehavior.priorCorrect = tempPriorCorrect(keepData);
 outputBehavior.nCues_RminusL = tempRminusL(keepData);
+outputBehavior.nCues_RplusL = tempRplusL(keepData);
+outputBehavior.ypos_collide = ypos_collide(keepData);
 
 
 
