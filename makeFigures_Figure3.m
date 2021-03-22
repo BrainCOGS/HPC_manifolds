@@ -12,13 +12,14 @@ outputFitPowerLaw = mind_fitPowerLaw_FunctionSLIM(fnameStruct, 'towers', 1, 5);
 
 % Copy and paste this to matlab on spock to submit all the jobs
 % 150 is not there because it is a bad trial
-trialsList = [145 146 147 148 149 151 152 153 154 157 158 159 160];
 
-for i=1:length(trialsList)
-    curTrial = num2str(trialsList(i));
-    command_string = redo_deadjob_function(curTrial);
-    submitJobs(command_string, 'towers');
-end
+% trialsList = [145 146 147 148 149 151 152 153 154 157 158 159 160];
+% 
+% for i=1:length(trialsList)
+%     curTrial = num2str(trialsList(i));
+%     command_string = redo_deadjob_function(curTrial);
+%     submitJobs(command_string, 'towers');
+% end
 
 %after jobs have completed, run:
 collect_allTrials_reconstructionMultipleTrials
@@ -26,7 +27,7 @@ collect_allTrials_reconstructionMultipleTrials
 
 %% Reconstruction scores
 
-clear all; close all;
+clear all; 
 
 % First run run_analysis_allTrials on matlab on spock to generate the
 % held-out trial data
@@ -43,10 +44,26 @@ axis square
 
 %% Comparison with PCA
 
+% Need the data from collect_allTrials_2to7_minLeaves500 from above
+
 mean_trials_animals = mind_pcaTest(fnameStruct);
+
+meanMaxReconstruct = mean(maxReconstruct,2);
 
 % Then find the index that corresponds to the first entry that surpasses
 % the numbers in the reconstruction scores plot above.
+
+greater4 = mean_trials_animals>meanMaxReconstruct(3);
+greater4 = find(greater4==1);
+greater4 = greater4(1);
+greater5 = mean_trials_animals>meanMaxReconstruct(4);
+greater5 = find(greater5==1);
+greater5 = greater5(1);
+greater6 = mean_trials_animals>meanMaxReconstruct(5);
+greater6 = find(greater6==1);
+greater6 = greater6(1);
+
+[greater4 greater5 greater6]
 
 
 %% Tiled fields

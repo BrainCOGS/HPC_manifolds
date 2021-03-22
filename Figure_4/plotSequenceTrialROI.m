@@ -6,7 +6,7 @@ if timestep>1
     warndlg('Are you sure that is timestep and not fs?');
 end
 
-aTrials = outputDoublets.saveAll_basics.aTrials;
+aTrials = outputDoublets.saveAll_basics.data_trialnrs;
 
 %% Extract rois and trials
 

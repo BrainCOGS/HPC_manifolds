@@ -98,6 +98,7 @@ histogram([outputDoublets.saveAll_doublets_Sig_Left.prediction]-[outputDoublets.
 title('Left Doublets, Real - Shuffle Prediction');
 xlabel('Fraction doublets went left');
 ylabel('# of Doublets');
+xlim([-.5 1])
 set(gca,'box','off')
 set(gca, 'FontName', 'Arial')
 
@@ -106,6 +107,7 @@ histogram(-1*([outputDoublets.saveAll_doublets_Sig_Right.prediction]-[outputDoub
 title('Right Doublets, Real - Shuffle Prediction');
 xlabel('Fraction doublets went right');
 ylabel('# of Doublets');
+xlim([-.5 1])
 set(gca,'box','off')
 set(gca, 'FontName', 'Arial')
 

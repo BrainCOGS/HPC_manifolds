@@ -47,6 +47,7 @@ saveAll_basics.lefttrials_choice = lefttrials_choice;
 saveAll_basics.righttrials_choice = righttrials_choice;
 saveAll_basics.alltrials_trialType = alltrials_trialType;
 saveAll_basics.ROIactivities         = ROIactivities;
+saveAll_basics.data_trialnrs = data_trial_nrs;
 
 clear score;
 

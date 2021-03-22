@@ -19,7 +19,7 @@ Ncrossval = 10;              % number of leave-out trials for crossvalidation
 nleafs    = 500;             % list of leafs for fitting manifolds of different complexity
 lmf       = 1;               % list of landmark_fractions
 
-storage_directory  = 'D:\CrossValidation\';
+storage_directory  = '\\192.168.0.233\Neuroscience\CrossValidation\';
 
 
 %% Main Code

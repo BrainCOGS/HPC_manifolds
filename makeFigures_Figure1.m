@@ -1,7 +1,3 @@
-
-%% Load the repository
-addpath(genpath('C:\Edward\School\Princeton\PNI Code\HPC_manifolds\'));
-
 %% Create structure of all behavioral logs for animals (at least 60% in T11 trials)
 
 fname_E22_20170215 = '\\bucket.pni.princeton.edu\braininit\RigData\scope\bay3\edward\PoissonTowers_1\data\E22\PoissonBlocksReboot_cohort1_Bezos3_E22_T_20170215.mat';
@@ -397,6 +393,27 @@ set(axs, 'ytick', 0:25:100)
 ylabel(axs,'Went right (%)')
 xlabel(axs, '\Delta towers (#R - #L)')
 
+%% Numbers of ROIs
+
+fnameStruct = mind_makeFnameStruct('Edward','towers','laptop');
+
+for i=1:length(fnameStruct)
+    load(fnameStruct(i).fname)
+    numroi(i) = size(score.dataDFF,2);
+    numtrial(i) = length(trial);
+end
+
+roi_mean = mean(numroi);
+roi_sem  = nieh_sem(numroi);
+roi_tot  = sum(numroi);
+trial_tot = sum(numtrial);
+
+basicStats.roi_mean = roi_mean;
+basicStats.roi_sem = roi_sem;
+basicStats.roi_tot = roi_tot;
+basicStats.trial_tot = trial_tot;
+
+
 %% Length of Trial Durations
 
 outputTrialDurations_E22 = extractTrialDurations('C:\Neuroscience\imaging\FINAL\E22_20170227_30per_userSetSD11minDur0.modelingFINAL.mat');
@@ -407,7 +424,21 @@ outputTrialDurations_E47 = extractTrialDurations('C:\Neuroscience\imaging\FINAL\
 outputTrialDurations_E48 = extractTrialDurations('C:\Neuroscience\imaging\FINAL\E48_20170829_70per_userSetSD5minDur0.modelingFINAL.mat');
 outputTrialDurations_E65 = extractTrialDurations('C:\Neuroscience\imaging\FINAL\E65_20180202_60per_userSetSD5minDur0.modelingFINAL.mat');
 
+trialtime_all = [outputTrialDurations_E22.meanLength outputTrialDurations_E39.meanLength outputTrialDurations_E43.meanLength outputTrialDurations_E44.meanLength outputTrialDurations_E47.meanLength outputTrialDurations_E48.meanLength outputTrialDurations_E65.meanLength];
+trialtime_all_mean = mean(trialtime_all);
+trialtime_all_sem  = nieh_sem(trialtime_all);
 
+trialtime_cue = [outputTrialDurations_E22.meanCue outputTrialDurations_E39.meanCue outputTrialDurations_E43.meanCue outputTrialDurations_E44.meanCue outputTrialDurations_E47.meanCue outputTrialDurations_E48.meanCue outputTrialDurations_E65.meanCue];
+trialtime_cue_mean = mean(trialtime_cue);
+trialtime_cue_sem  = nieh_sem(trialtime_cue);
 
+trialtime_delay = [outputTrialDurations_E22.meanMem outputTrialDurations_E39.meanMem outputTrialDurations_E43.meanMem outputTrialDurations_E44.meanMem outputTrialDurations_E47.meanMem outputTrialDurations_E48.meanMem outputTrialDurations_E65.meanMem];
+trialtime_delay_mean = mean(trialtime_delay);
+trialtime_delay_sem  = nieh_sem(trialtime_delay);
 
-
+basicStats.trialtime_all_mean = trialtime_all_mean;
+basicStats.trialtime_all_sem = trialtime_all_sem;
+basicStats.trialtime_cue_mean = trialtime_cue_mean;
+basicStats.trialtime_cue_sem = trialtime_cue_sem;
+basicStats.trialtime_delay_mean = trialtime_delay_mean;
+basicStats.trialtime_delay_sem = trialtime_delay_sem;
