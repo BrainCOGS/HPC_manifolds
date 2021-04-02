@@ -295,3 +295,17 @@ ylabel('Accuracy')
 ylim([.4 1]);
 set(gca, 'box', 'off')
 title('Prior Correct');
+
+%% Correlation between view angle and evidence
+
+fnameStruct = mind_makeFnameStruct('Edward','towers','laptop');
+
+for i=1:length(fnameStruct)
+    nic_output = extractVariables('all', 2, 'keepTrials', 2, 0, 0, 5, [11 4], fnameStruct(i).fname,'none','towers',1,1);
+    evidence = nic_output.behavioralVariables.Evidence;
+    viewangle = nic_output.behavioralVariables.ViewAngle;
+    corr1 = corrcoef(evidence, -viewangle);
+    VA_E_corr(i) = corr1(1,2);
+end
+mean(VA_E_corr)
+nieh_sem(VA_E_corr)
