@@ -416,13 +416,15 @@ basicStats.trial_tot = trial_tot;
 
 %% Length of Trial Durations
 
-outputTrialDurations_E22 = extractTrialDurations('C:\Neuroscience\imaging\FINAL\E22_20170227_30per_userSetSD11minDur0.modelingFINAL.mat');
-outputTrialDurations_E39 = extractTrialDurations('C:\Neuroscience\imaging\FINAL\E39_20171103_40per_userSetSD11minDur0.modelingFINAL.mat');
-outputTrialDurations_E43 = extractTrialDurations('C:\Neuroscience\imaging\FINAL\E43_20170802_70per_userSetSD5minDur0.modelingFINAL.mat');
-outputTrialDurations_E44 = extractTrialDurations('C:\Neuroscience\imaging\FINAL\E44_20171018_50per_userSetSD5minDur0.modelingFINAL.mat');
-outputTrialDurations_E47 = extractTrialDurations('C:\Neuroscience\imaging\FINAL\E47_20170927_70per_userSetSD5minDur0.modelingFINAL.mat');
-outputTrialDurations_E48 = extractTrialDurations('C:\Neuroscience\imaging\FINAL\E48_20170829_70per_userSetSD5minDur0.modelingFINAL.mat');
-outputTrialDurations_E65 = extractTrialDurations('C:\Neuroscience\imaging\FINAL\E65_20180202_60per_userSetSD5minDur0.modelingFINAL.mat');
+fnameStruct = mind_makeFnameStruct('Edward','towers','laptop');
+
+outputTrialDurations_E22 = extractTrialDurations(fnameStruct(1).fname);
+outputTrialDurations_E39 = extractTrialDurations(fnameStruct(2).fname);
+outputTrialDurations_E43 = extractTrialDurations(fnameStruct(3).fname);
+outputTrialDurations_E44 = extractTrialDurations(fnameStruct(4).fname);
+outputTrialDurations_E47 = extractTrialDurations(fnameStruct(5).fname);
+outputTrialDurations_E48 = extractTrialDurations(fnameStruct(6).fname);
+outputTrialDurations_E65 = extractTrialDurations(fnameStruct(7).fname);
 
 trialtime_all = [outputTrialDurations_E22.meanLength outputTrialDurations_E39.meanLength outputTrialDurations_E43.meanLength outputTrialDurations_E44.meanLength outputTrialDurations_E47.meanLength outputTrialDurations_E48.meanLength outputTrialDurations_E65.meanLength];
 trialtime_all_mean = mean(trialtime_all);
@@ -442,3 +444,18 @@ basicStats.trialtime_cue_mean = trialtime_cue_mean;
 basicStats.trialtime_cue_sem = trialtime_cue_sem;
 basicStats.trialtime_delay_mean = trialtime_delay_mean;
 basicStats.trialtime_delay_sem = trialtime_delay_sem;
+
+%% Length of Sessions
+
+fnameStruct = mind_makeFnameStruct('Edward','towers','laptop');
+
+for i=1:length(fnameStruct)
+    load(fnameStruct(i).fname_behav);
+    s = seconds(etime(log.session.end, log.session.start));
+    time_s(i) = s;
+    s.Format = 'hh:mm:ss';
+    time_hhmmss(i) = s;
+end
+    
+basicStats.session_length_mean = mean(time_hhmmss);
+basicStats.session_length_sem = nieh_sem(time_hhmmss);

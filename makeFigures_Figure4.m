@@ -38,34 +38,10 @@ makeOutputTriplets_Metamouse
 plotDoublets(outputDoublets_metamouse);
 plotTriplets(outputTriplets_metamouse);
 
-leftSig_triplet(:,2) = [outputTriplets_metamouse.saveAll_triplets_Sig_Left.cell1and2only_predict];
-leftSig_triplet(:,1)   = [outputTriplets_metamouse.saveAll_triplets_Sig_Left.prediction];
-leftSig_triplet(:,3) = [outputTriplets_metamouse.saveAll_triplets_Sig_Left.cell3only_predict];
-leftSig_triplet(any(isnan(leftSig_triplet), 2), :) = [];
-[~,pl1] = ttest(leftSig_triplet(:,1), leftSig_triplet(:,2));
-[~,pl2] = ttest(leftSig_triplet(:,1), leftSig_triplet(:,3));
-[~,pl3] = ttest(leftSig_triplet(:,2), leftSig_triplet(:,3));
-pl1*3
-pl2*3
-pl3*3
-
-rightSig_triplet(:,2) = [outputTriplets_metamouse.saveAll_triplets_Sig_Right.cell1and2only_predict];
-rightSig_triplet(:,1)   = [outputTriplets_metamouse.saveAll_triplets_Sig_Right.prediction];
-rightSig_triplet(:,3) = [outputTriplets_metamouse.saveAll_triplets_Sig_Right.cell3only_predict];
-rightSig_triplet(any(isnan(rightSig_triplet), 2), :) = [];
-[~,pr1] = ttest(rightSig_triplet(:,1), rightSig_triplet(:,2));
-[~,pr2] = ttest(rightSig_triplet(:,1), rightSig_triplet(:,3));
-[~,pr3] = ttest(rightSig_triplet(:,2), rightSig_triplet(:,3));
-pr1*3
-pr2*3
-pr3*3
-
-[p, pr] = ttest([outputTriplets_metamouse.saveAll_triplets_Sig_Left.cell1and2only_predict], [outputTriplets_metamouse.saveAll_triplets_Sig_Left.trip1_2_no3_shuffle])
-[p, pr] = ttest([outputTriplets_metamouse.saveAll_triplets_Sig_Right.cell1and2only_predict], [outputTriplets_metamouse.saveAll_triplets_Sig_Right.trip1_2_no3_shuffle])
-
 
 %% To plot the trajectory between two cells in doublets (Fig. 4d)
 
+% takes about 1 min to run
 outputTrajectory_E39 = mind_plotDoubletTrajectory(fnameStruct(2).fname_mani, fnameStruct(2).fname, 1, 11, [5 0], 3, outputDoublets_E39, 219, [6 7], 0);
 
 

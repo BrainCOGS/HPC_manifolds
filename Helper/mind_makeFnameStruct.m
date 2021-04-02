@@ -11,30 +11,37 @@ if strcmp(user1,'Edward')==1
             fnameStruct(1).fname      = 'C:\Neuroscience\imaging\FINAL\E22_20170227_30per_userSetSD11minDur0.modelingFINAL.mat';
             % fnameStruct(1).fname_mani = 'C:\Neuroscience\imaging\E22_minLeaves_500_lmf_1_dim_2to7_manifold.mat';
             fnameStruct(1).fname_mani = 'C:\Neuroscience\imaging\FINAL\Towers\E22_minLeaves_500_lmf_1_manifold_Towers_FINAL.mat';
+            fnameStruct(1).fname_behav = 'C:\Neuroscience\imaging\FINAL\Towers\PoissonBlocksReboot_cohort1_Bezos3_E22_T_20170227.mat';
             
             fnameStruct(2).fname      = 'C:\Neuroscience\imaging\FINAL\E39_20171103_40per_userSetSD11minDur0.modelingFINAL.mat';
             % fnameStruct(2).fname_mani = 'C:\Neuroscience\imaging\E39_minLeaves_500_lmf_1_dim_2to7_manifold.mat';
             fnameStruct(2).fname_mani = 'C:\Neuroscience\imaging\FINAL\Towers\E39_minLeaves_500_lmf_1_manifold_Towers_FINAL.mat';
+            fnameStruct(2).fname_behav = 'C:\Neuroscience\imaging\FINAL\Towers\PoissonBlocksReboot3_cohort3_Bezos3_E39_T_20171103.mat';
             
             fnameStruct(3).fname      = 'C:\Neuroscience\imaging\FINAL\E43_20170802_70per_userSetSD5minDur0.modelingFINAL.mat';
             % fnameStruct(3).fname_mani = 'C:\Neuroscience\imaging\E43_minLeaves_500_lmf_1_dim_2to7_manifold.mat';
             fnameStruct(3).fname_mani = 'C:\Neuroscience\imaging\FINAL\Towers\E43_minLeaves_500_lmf_1_manifold_Towers_FINAL.mat';
+            fnameStruct(3).fname_behav = 'C:\Neuroscience\imaging\FINAL\Towers\PoissonBlocksReboot2_cohort2_Bezos3_E43_T_20170802.mat';
             
             fnameStruct(4).fname      = 'C:\Neuroscience\imaging\FINAL\E44_20171018_50per_userSetSD5minDur0.modelingFINAL.mat';
             % fnameStruct(4).fname_mani = 'C:\Neuroscience\imaging\E44_minLeaves_500_lmf_1_dim_2to7_manifold.mat';
             fnameStruct(4).fname_mani = 'C:\Neuroscience\imaging\FINAL\Towers\E44_minLeaves_500_lmf_1_manifold_Towers_FINAL.mat';
+            fnameStruct(4).fname_behav = 'C:\Neuroscience\imaging\FINAL\Towers\PoissonBlocksReboot2_cohort2_Bezos3_E44_T_20171018.mat';
             
             fnameStruct(5).fname      = 'C:\Neuroscience\imaging\FINAL\E47_20170927_70per_userSetSD5minDur0.modelingFINAL.mat';
             % fnameStruct(5).fname_mani = 'C:\Neuroscience\imaging\E47_minLeaves_500_lmf_1_dim_2to7_manifold.mat';
             fnameStruct(5).fname_mani = 'C:\Neuroscience\imaging\FINAL\Towers\E47_minLeaves_500_lmf_1_manifold_Towers_FINAL.mat';
+            fnameStruct(5).fname_behav = 'C:\Neuroscience\imaging\FINAL\Towers\PoissonBlocksReboot3_cohort3_Bezos3_E47_T_20170927.mat';
             
             fnameStruct(6).fname      = 'C:\Neuroscience\imaging\FINAL\E48_20170829_70per_userSetSD5minDur0.modelingFINAL.mat';
             % fnameStruct(6).fname_mani = 'C:\Neuroscience\imaging\E48_minLeaves_500_lmf_1_dim_2to7_manifold.mat';
             fnameStruct(6).fname_mani = 'C:\Neuroscience\imaging\FINAL\Towers\E48_minLeaves_500_lmf_1_manifold_Towers_FINAL.mat';
+            fnameStruct(6).fname_behav = 'C:\Neuroscience\imaging\FINAL\Towers\PoissonBlocksReboot3_cohort3_Bezos3_E48_T_20170829.mat';
             
             fnameStruct(7).fname      = 'C:\Neuroscience\imaging\FINAL\E65_20180202_60per_userSetSD5minDur0.modelingFINAL.mat';
             % fnameStruct(7).fname_mani = 'C:\Neuroscience\imaging\E65_minLeaves_500_lmf_1_dim_2to7_manifold.mat';
             fnameStruct(7).fname_mani = 'C:\Neuroscience\imaging\FINAL\Towers\E65_minLeaves_500_lmf_1_manifold_Towers_FINAL.mat';
+            fnameStruct(7).fname_behav = 'C:\Neuroscience\imaging\FINAL\Towers\PoissonBlocksReboot4_cohort4_Bezos3_E65_T_20180202.mat';
             
         elseif strcmp(cpuType,'spock')==1
                  

@@ -3,9 +3,9 @@
 
 fnameStruct_T7 = mind_makeFnameStruct('Edward','T7', 'none');
 
-% Load data from: "C:\Neuroscience\imaging\FINAL\fitPowerLaw_Data\outputFitPowerLaw_T7.mat"
+load("C:\Neuroscience\imaging\FINAL\fitPowerLaw_Data\outputFitPowerLaw_T7.mat");
 % Or run this
-outputFitPowerLaw_T7 = mind_fitPowerLaw_FunctionSLIM(fnameStruct_T7, 'T7', 1, 4);
+% outputFitPowerLaw_T7 = mind_fitPowerLaw_FunctionSLIM(fnameStruct_T7, 'T7', 1, 4);
 
 load("C:\Neuroscience\imaging\FINAL\fitPowerLaw_Data\outputFitPowerLaw_Towers.mat")
 

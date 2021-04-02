@@ -165,5 +165,9 @@ load("C:\Neuroscience\imaging\FINAL\decoding_Data\decodeEandY_all.mat")
 bestfit_position = meancorrAll_Y(:,4);
 bestfit_evidence = meancorrAll_E(:,4);
 
-outputHPC2HPC = map_HPC2HPC(fnameStruct, bestfit_position, bestfit_evidence);
+load('C:\Neuroscience\imaging\FINAL\HPC2HPC_Data\outputHPC2HPC.mat')
+% Or run this code:
+%outputHPC2HPC = map_HPC2HPC(fnameStruct, bestfit_position, bestfit_evidence);
+
 outputPlotHPC2HPC = plot_HPC2HPC(outputHPC2HPC);
+

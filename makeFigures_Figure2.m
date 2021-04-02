@@ -114,29 +114,69 @@ skaggsMetric_All_sem_Sig  = [nieh_sem(skaggsMetric_All_ExY_Real_Sig) nieh_sem(sk
 skaggsMetric_All_mean = [mean(skaggsMetric_All_ExY_Real) mean(skaggsMetric_All_RxY_Real) mean(skaggsMetric_All_ExR_Real)];
 skaggsMetric_All_sem  = [nieh_sem(skaggsMetric_All_ExY_Real) nieh_sem(skaggsMetric_All_RxY_Real) nieh_sem(skaggsMetric_All_ExR_Real)];
 
-figure; 
-subplot(1,2,1)
-bar(skaggsMetric_All_mean_Sig);
-hold on;
-er = errorbar([1:3], skaggsMetric_All_mean_Sig, [0 0 0], skaggsMetric_All_sem_Sig);
-er.LineStyle = 'none'; 
-er.Color = 'b';   
-ylim([0 .03]);
-xticklabels({'E x Y','Random x Y','E x Random'});
-xtickangle(45)
-ylabel('Mean Mutual Information Value');
-title('Significant ROIs');
+%pair1 = log([skaggsMetric_All_ExY_Real_Sig-skaggsMetric_All_RxY_Real_Sig]);
+%pair2 = log([skaggsMetric_All_ExY_Real_Sig-skaggsMetric_All_ExR_Real_Sig]);
+%pair3 = log([skaggsMetric_All_RxY_Real_Sig-skaggsMetric_All_ExR_Real_Sig]);
 
-subplot(1,2,2)
-bar(skaggsMetric_All_mean);
+skaggsMetric_All_ExY_Real_Sig_log = log(skaggsMetric_All_ExY_Real_Sig);
+skaggsMetric_All_RxY_Real_Sig_log = log(skaggsMetric_All_RxY_Real_Sig);
+skaggsMetric_All_ExR_Real_Sig_log = log(skaggsMetric_All_ExR_Real_Sig);
+
+figure; 
+%scatter(ones(size(skaggsMetric_All_ExY_Real_Sig)).*(1+(rand(size(skaggsMetric_All_ExY_Real_Sig))-0.5)/5),skaggsMetric_All_ExY_Real_Sig,5,'k','filled','MarkerFaceAlpha',0.2);
+%scatter(ones(size(skaggsMetric_All_RxY_Real_Sig)).*(2+(rand(size(skaggsMetric_All_RxY_Real_Sig))-0.5)/5),skaggsMetric_All_RxY_Real_Sig,5,'k','filled','MarkerFaceAlpha',0.2);
+%scatter(ones(size(skaggsMetric_All_ExR_Real_Sig)).*(3+(rand(size(skaggsMetric_All_ExR_Real_Sig))-0.5)/5),skaggsMetric_All_ExR_Real_Sig,5,'k','filled','MarkerFaceAlpha',0.2);
+plot([skaggsMetric_All_ExY_Real_Sig_log; skaggsMetric_All_RxY_Real_Sig_log; skaggsMetric_All_ExR_Real_Sig_log],'k','LineWidth',.01)
 hold on;
-er = errorbar([1:3], skaggsMetric_All_mean, [0 0 0], skaggsMetric_All_sem);
-er.LineStyle = 'none'; 
-er.Color = 'b';   
-ylim([0 .03]);
-xticklabels({'E x Y','Random x Y','E x Random'});
+h=boxplot([skaggsMetric_All_ExY_Real_Sig_log; skaggsMetric_All_RxY_Real_Sig_log; skaggsMetric_All_ExR_Real_Sig_log]','Whisker',1000,'PlotStyle','traditional','Widths',.3,'Colors','b');
+set(h,{'linew'},{2})
+%ylim([0 .15]);
+xticklabels({'E x Y','R x Y','E x R'});
 xtickangle(45)
-title('All ROIs');
+ylabel('Log Mutual Information');
+title('Significant ROIs');
+set(gca,'box','off')
+set(gca, 'FontName', 'Arial')
+set(gcf, 'Position', [100, 340, 313, 420])
+% 
+% figure; 
+% h=boxplot([pair1; pair2; pair3]','Whisker',1000,'PlotStyle','traditional','Widths',.3,'Colors','k');
+% set(h,{'linew'},{2})
+% hold on;
+% scatter(ones(size(pair1)).*(1+(rand(size(pair1))-0.5)/5),pair1,5,'k','filled','MarkerFaceAlpha',0.2);
+% scatter(ones(size(pair2)).*(2+(rand(size(pair2))-0.5)/5),pair2,5,'k','filled','MarkerFaceAlpha',0.2);
+% scatter(ones(size(pair3)).*(3+(rand(size(pair3))-0.5)/5),pair3,5,'k','filled','MarkerFaceAlpha',0.2);
+% ylim([-0.06 .12]);
+% xticklabels({'E x Y - Random x Y','E x Y - E x Random','Random x Y - E x Random'});
+% xtickangle(45)
+% ylabel('Difference Mutual Information Value');
+% title('Significant ROIs');
+% set(gca,'box','off')
+% set(gca, 'FontName', 'Arial')
+% 
+% figure; 
+% subplot(1,2,1)
+% bar(skaggsMetric_All_mean_Sig);
+% hold on;
+% er = errorbar([1:3], skaggsMetric_All_mean_Sig, [0 0 0], skaggsMetric_All_sem_Sig);
+% er.LineStyle = 'none'; 
+% er.Color = 'b';   
+% ylim([0 .03]);
+% xticklabels({'E x Y','Random x Y','E x Random'});
+% xtickangle(45)
+% ylabel('Mean Mutual Information Value');
+% title('Significant ROIs');
+% 
+% subplot(1,2,2)
+% bar(skaggsMetric_All_mean);
+% hold on;
+% er = errorbar([1:3], skaggsMetric_All_mean, [0 0 0], skaggsMetric_All_sem);
+% er.LineStyle = 'none'; 
+% er.Color = 'b';   
+% ylim([0 .03]);
+% xticklabels({'E x Y','Random x Y','E x Random'});
+% xtickangle(45)
+% title('All ROIs');
 
 figure; 
 subplot(1,2,1)
@@ -170,3 +210,6 @@ r2=r2*3
 
 [p3, r3] = ttest(skaggsMetric_All_ExR_Real_Sig, skaggsMetric_All_RxY_Real_Sig);
 r3=r3*3
+
+%% Significant neurons
+

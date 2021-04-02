@@ -10,7 +10,7 @@ subplot(2,2,1)
 numberDub_real_shuffle = [outputDoublets.saveAll_doublets.number_doublets; outputDoublets.saveAll_doublets.shuffle_length];
 diff_num = [numberDub_real_shuffle(1,:)-numberDub_real_shuffle(2,:)];
 [~,p_diff_num] = ttest(numberDub_real_shuffle(1,:), numberDub_real_shuffle(2,:));
-disp(['paired t test : p=' num2str(p_diff_num)]); 
+disp(['Fig. 4b, paired t test : p=' num2str(p_diff_num)]); 
 h=boxplot(diff_num,'Whisker',1000,'PlotStyle','traditional','Widths',.3,'Colors','k');
 set(h,{'linew'},{2})
 hold on
@@ -26,7 +26,7 @@ subplot(2,2,2)
 direction_real_shuffle = [outputDoublets.saveAll_doublets.asymmetry_length_diff; outputDoublets.saveAll_doublets.mean_asymmetry_diff_length_shuf];
 diff_sym = [direction_real_shuffle(1,:)-direction_real_shuffle(2,:)];
 [~,p_diff_sym] = ttest(direction_real_shuffle(1,:), direction_real_shuffle(2,:));
-disp(['paired t test : p=' num2str(p_diff_sym)]); 
+disp(['Fig. 4c, paired t test : p=' num2str(p_diff_sym)]); 
 h=boxplot(diff_sym,'Whisker',1000,'PlotStyle','traditional','Widths',.3,'Colors','k');
 set(h,{'linew'},{2})
 hold on
@@ -42,7 +42,7 @@ subplot(2,2,3)
 left_real_shuffle = [outputDoublets.saveAll_doublets_Sig_Left.prediction; outputDoublets.saveAll_doublets_Sig_Left.doublet_shuffle];
 diff_left = [left_real_shuffle(1,:)-left_real_shuffle(2,:)];
 [~,p_diff_left] = ttest(left_real_shuffle(1,:), left_real_shuffle(2,:));
-disp(['paired t test : p=' num2str(p_diff_left)]); 
+disp(['Fig 4f (left), paired t test : p=' num2str(p_diff_left)]); 
 h=boxplot(diff_left,'Whisker',1000,'PlotStyle','traditional','Widths',.3,'Colors','k');
 set(h,{'linew'},{2})
 hold on
@@ -58,7 +58,7 @@ subplot(2,2,4)
 right_real_shuffle = 1-[outputDoublets.saveAll_doublets_Sig_Right.prediction; outputDoublets.saveAll_doublets_Sig_Right.doublet_shuffle];
 diff_right = [right_real_shuffle(1,:)-right_real_shuffle(2,:)];
 [~,p_diff_right] = ttest(right_real_shuffle(1,:), right_real_shuffle(2,:));
-disp(['paired t test : p=' num2str(p_diff_right)]); 
+disp(['Fig 4f (right), paired t test : p=' num2str(p_diff_right)]); 
 h=boxplot(diff_right,'Whisker',1000,'PlotStyle','traditional','Widths',.3,'Colors','k');
 set(h,{'linew'},{2})
 hold on

@@ -8,8 +8,8 @@
 % Do the same for Position + Y Velocity
 % Do the same for Position + Time
 
-filelocation = 'D:\Encoding\';
-% filelocation = 'M:\enieh\mind\FINAL\Towers\Encoding\';
+%filelocation = 'D:\Encoding\';
+filelocation = 'M:\enieh\mind\FINAL\Towers\Encoding\';
 animals = {'E22', 'E39', 'E43', 'E44', 'E47', 'E48', 'E65'};
 
 % View angle and evidence
@@ -19,11 +19,7 @@ for i=1:length(animals)
     all_coefs(i,:) = outputRegressOutViewAngle2.all_coefs;
 end
 
-disp(signrank(all_coefs(:,2), all_coefs(:,1)));  % significance across animals
-
-disp(mean( (all_coefs(:,2) - all_coefs(:,1))./all_coefs(:,1) ));
-
-disp(std( (all_coefs(:,2) - all_coefs(:,1))./all_coefs(:,1) ) / sqrt(length(all_coefs)));
+disp(signrank(all_coefs(:,2), all_coefs(:,1)));  
 
 figure;
 hold on;
@@ -43,10 +39,6 @@ end
 
 disp(signrank(all_coefs(:,2), all_coefs(:,1)));  % significance across animals
 
-disp(mean( (all_coefs(:,2) - all_coefs(:,1))./all_coefs(:,1) ));
-
-disp(std( (all_coefs(:,2) - all_coefs(:,1))./all_coefs(:,1) ) / sqrt(length(all_coefs)));
-
 figure;
 hold on;
 nieh_barSEMpaired(all_coefs(:,1), all_coefs(:,2))
@@ -63,10 +55,6 @@ for i=1:length(animals)
 end
 
 disp(signrank(all_coefs(:,2), all_coefs(:,1)));  % significance across animals
-
-disp(mean( (all_coefs(:,2) - all_coefs(:,1))./all_coefs(:,1) ));
-
-disp(std( (all_coefs(:,2) - all_coefs(:,1))./all_coefs(:,1) ) / sqrt(length(all_coefs)));
 
 figure;
 hold on;
@@ -136,15 +124,25 @@ end
 
 mean1A = mean(prob1A);
 
+close all;
+
+rng(1)
 tow_CI = nieh_ci(prob1,1000);
 alt_CI = nieh_ci(prob1A,1000);
 
-close all;
+tow_CI_fixed = [tow_CI(2,:); tow_CI(1,:)];
+alt_CI_fixed = [alt_CI(2,:); alt_CI(1,:)];
+
+tow_CI_fixed(1,:) = tow_CI_fixed(1,:)-mean1;
+tow_CI_fixed(2,:) = mean1-tow_CI_fixed(2,:);
+
+alt_CI_fixed(1,:) = alt_CI_fixed(1,:)-mean1A;
+alt_CI_fixed(2,:) = mean1A-alt_CI_fixed(2,:);
 
 figure; 
 hold on;
-shadedErrorBar_CI(centers,mean1,tow_CI,'lineProps', 'b'); 
-shadedErrorBar_CI(centers,mean1A,alt_CI,'lineProps', 'r'); 
+shadedErrorBar(centers,mean1,tow_CI_fixed,'lineProps', 'b'); 
+shadedErrorBar(centers,mean1A,alt_CI_fixed,'lineProps', 'r'); 
 plot(centers,prob1A','g')
 plot(centers,prob1','y')
 legend('Towers','Alternation');

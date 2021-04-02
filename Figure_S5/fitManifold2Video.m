@@ -218,8 +218,11 @@ function dat = fitManifold2Video(fname, videopath, savepath, savepath_manifold, 
 
     [t,n] = size(result.forestdat.pca.f);
     disp("Needed " + num2str(n) + " PCs for 95% variance")
+    
+    outMind.dat = result;
+    outMind.config_input.mindparameters = mindparameters;
 
-    save(savepath_manifold,'-v7.3')
+    save(saveName,'-v7.3')
     
     %%% Plot manifold
     % pca_coords = result.forestdat.pca.model.transform(data_for_mind, 0.95);
