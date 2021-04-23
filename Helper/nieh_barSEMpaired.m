@@ -20,6 +20,6 @@ outputBarSEM.semBar  = semBar;
 outputBarSEM.ax1 = gca;
 
 for i=1:size(allpoints,1)
-plot(allpoints(i,:),'o-k');
+plot(allpoints(i,:),'.-k');
 end
 

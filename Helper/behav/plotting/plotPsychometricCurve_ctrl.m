@@ -1,5 +1,5 @@
 
-function handle = plotPsychometricCurve_ctrl(perfPsych,plotWhat,ca,cl,plotFit,sh,applyDefaults)
+function sourceData = plotPsychometricCurve_ctrl(perfPsych,plotWhat,ca,cl,plotFit,sh,applyDefaults)
 
 if nargin < 2
   plotWhat = 'bin';
@@ -63,6 +63,13 @@ if plotFit(1)
   handle = errbar(x,y'*100,[l'*100;u'*100],cl,.75,0,'none');
   plot(x,y*100,'.','color',cl,'markersize',7);
   handle(end+1) = plot(fitx,fity*100,'-','color',sh,'linewidth',1);
+  
+  sourceData.x = x;
+  sourceData.y = y'*100;
+  sourceData.le = l'*100;
+  sourceData.ue = u'*100;
+  sourceData.fitx = fitx;
+  sourceData.fity = fity*100;
 else
   y(x==0) = [];
   l(x==0) = [];

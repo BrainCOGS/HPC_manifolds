@@ -16,7 +16,7 @@ function out_examples = plot_exampleTrialsNEW(fname, skaggs_out, whichTrials)
 switch skaggs_out.argins.taskType
     case 'towers'
         config.trialLength = 330;
-    case 'alternation'
+    case 'alternationJeff'
         config.trialLength = 370;
 end
 
@@ -26,7 +26,7 @@ out.config = config;
 
 numROI = length(skaggs_out.ROIs);
 
-nic_output_POS = extractVariables('all', 4, whichTrials, 2, config.trialLength, 0, 5, skaggs_out.argins.DFFthresholding, fname,'none',skaggs_out.argins.taskType,1,1);
+nic_output_POS = extractVariables('all', 5, whichTrials, 2, config.trialLength, 0, 5, skaggs_out.argins.DFFthresholding, fname,'none',skaggs_out.argins.taskType,1,1);
 behavioralVariables = nic_output_POS.behavioralVariables;
 trialn   = behavioralVariables.Trial;
 trials = unique(trialn);
@@ -41,7 +41,7 @@ DFF_trials = reshape(nic_output_POS.ROIactivities,[config.trialLength+1,numtrial
 
 
 
-layout       = [ 1 2 3 4 5 6 7 8 9 10];
+layout       = [ 1 2 3 4 5 6];
 fig          = PaneledFigure(layout, 'smaller');
 iPanel       = 0;
 % figure

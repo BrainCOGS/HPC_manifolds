@@ -119,8 +119,8 @@ config.circshiftIndLimit            = 1;    % limit for within-trial shuffling
 config.shuffleRNG                   = 2018; % RNG set to this each time
 if strcmp(input14taskType, 'towers')
     config.mazeRegion               = 2;    % cue + delay region
-elseif strcmp(input14taskType, 'alternation')
-    config.mazeRegion               = 4;    % entire trial (from fTrialStart to fITIEnd)
+elseif strcmp(input14taskType, 'alternationJeff')
+    config.mazeRegion               = 6;    
 end
 config.activityType                 = 2;    % DFF activity
 config.trialLength                  = 0;    % sample DFF by frame
@@ -773,7 +773,7 @@ if (length(argins.randomDimMethod) > 3 || ...
     error(['Input 12 (Random Dim Method) and Input 13 (Random Bin ', ...
         'Edges) must be a cell array less than length 3.']);
 end
-if sum(strcmp(argins.taskType, {'towers', 'alternation'})) ~= 1
+if sum(strcmp(argins.taskType, {'towers', 'alternationJeff'})) ~= 1
     % the datafiles are either the accumulating towers task or the
     % alternation task
     error(['Input 14 (Task Type) must be specified as either ', ...

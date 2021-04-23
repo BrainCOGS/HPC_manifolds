@@ -519,7 +519,7 @@ if argins.trialLength ~= 0 % if 0, don't sample
     % determine task type because towers and alternation tasks have
     % different maze region lengths
     switch argins.taskType
-        case {'towers','alternation'}
+        case {'towers','alternation','towers_S1'}
             switch argins.mazeRegion
                 case 0 % cue region
                     posStart = 0;
@@ -544,10 +544,13 @@ if argins.trialLength ~= 0 % if 0, don't sample
             switch argins.mazeRegion
                 case 4 % fTrialStart to fITIEnd
                     posStart = -30;
-                    posEnd = 348;
-                case 6
+                    posEnd = 340;
+                case 5
                     posStart = -30;
-                    posEnd = 348;
+                    posEnd = 340;
+                case 6
+                    posStart = 0;
+                    posEnd = 340;
             end
     end
     % using start and end positions, create a uniform position sequence

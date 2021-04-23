@@ -379,6 +379,12 @@ ylabel('Weight on decision')
 psychByMouse = xMousePyschometric(S.choice,S.nCues_RminusL,S.mouseID);
 psych        = psychometricFit(S.choice,S.nCues_RminusL,true);
 
+c_Position  = toBinCenters(logisticRegr.bins)';
+c_Weight    = logisticRegr.goodValues;
+c_Meta_mean = logisticRegr.values;
+c_Meta_sem  = logisticRegr.sem;
+
+
 %% plot best fitting sigmoid for each mouse and overlay metamouse
 iPanel                  = iPanel + 1;
 axs                     = fig.panel(iPanel);
@@ -388,10 +394,20 @@ for iMouse = 1:size(psychByMouse.goodCurves,2)
         'linewidth',         FormatDefaults.linewidthThin,     ...
         'color'    ,         FormatDefaults.lightGray)
 end
-plotPsychometricCurve_ctrl(psych, 'all', axs, 'k', true, 'k', false);
+sourceData = plotPsychometricCurve_ctrl(psych, 'all', axs, 'k', true, 'k', false);
 set(axs, 'ytick', 0:25:100)
 ylabel(axs,'Went right (%)')
 xlabel(axs, '\Delta towers (#R - #L)')
+
+b_Evidence              = psychByMouse.fitXaxis';
+b_Performance           = 100.*psychByMouse.goodFits;
+b_Meta_Evidence         = sourceData.x';
+b_Meta_Performance_mean = sourceData.y';
+b_Meta_Performance_LE   = sourceData.le';
+b_Meta_Performance_UE   = sourceData.ue';
+b_Meta_Fit_Evidence     = sourceData.fitx';
+b_Meta_Fit_Performance  = sourceData.fity;
+
 
 %% Numbers of ROIs
 

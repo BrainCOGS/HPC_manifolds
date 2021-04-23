@@ -41,7 +41,7 @@ daspect([1 1 1])
 set(h, 'position', [0.5 0.1 0.8 0.7] );
 set(gca, 'XTick', [], 'XTickLabel', []) 
 yticks([.5,26,51.5])
-yticklabels({'>2','1','0'})
+yticklabels({'≥2','1','0'})
 a = get(gca,'yTickLabel');
 set(gca,'yTickLabel',a,'fontsize',18)
 text(0,-1.3,'\DeltaF/F','FontSize',20)

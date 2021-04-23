@@ -25,36 +25,29 @@ pY = signrank(bar_Y, GPR_position);
 
 figure;
 subplot(1,3,1)
-bar([mean(GPR_evidence), mean(bar_evi)])
-hold on;
-plot([GPR_evidence; bar_evi], 'ko-')
-errorbar([1, 2], [mean(GPR_evidence), mean(bar_evi)], [std(GPR_evidence)/sqrt(length(GPR_evidence)), std(bar_evi)/sqrt(length(bar_evi))], 'bo');
+nieh_barSEMpaired(GPR_evidence, bar_evi);
 title("evidence: p=" + num2str(pE))
 xlabel("GPR, Hyper")
 ylabel("Reconstruction Score (r) for Evidence")
+set(gca, 'box', 'off')
 
 subplot(1,3,2)
-bar([mean(GPR_position), mean(bar_Y)])
-hold on;
-plot([GPR_position; bar_Y], 'ko-')
-errorbar([1, 2], [mean(GPR_position), mean(bar_Y)], [std(GPR_position)/sqrt(length(GPR_position)), std(bar_Y)/sqrt(length(bar_Y))], 'bo');
+nieh_barSEMpaired(GPR_position, bar_Y);
 title("position: p=" + num2str(pY))
 xlabel("GPR, Hyper")
 ylabel("Reconstruction Score (r) for Position")
+set(gca, 'box', 'off')
 
 subplot(1,3,3)
 dY = bar_Y.^2 ./ max([bar_Y.^2 ; GPR_position.^2]);
 dE = bar_evi.^2 ./ max([bar_evi.^2 ; GPR_evidence.^2]);
 %[h,pYvE] = ttest(dY, dE);
 pYvE = signrank(dY, dE);
-bar([mean(dY), mean(dE)])
-hold on;
-plot([dY; dE], 'ko-')
-errorbar([1, 2], [mean(dY), mean(dE)], [std(dY)/sqrt(length(dY)), std(dE)/sqrt(length(dE))], 'bo');
+nieh_barSEMpaired(dY, dE);
 title("p=" + num2str(pYvE))
 xlabel("Pos-shared, Evi-shared")
 ylabel("Contribution of shared geometry to Reconstruction score")
-set(gcf,'color','w');
+set(gca, 'box', 'off')
 
 outputPlotHPC2HPC.pE = pE;
 outputPlotHPC2HPC.pY = pY;

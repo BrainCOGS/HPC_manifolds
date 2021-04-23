@@ -31,7 +31,7 @@ smooth_L = mind_smoothDimensions(manifold3d,lum,20);
 
 figure;
 subplot(1,3,1)
-scatter3(y(:,1), y(:,2), y(:,3), [], smooth_DL, '.')
+scatter3(y(:,1), y(:,2), y(:,3), 20, smooth_DL,'filled','MarkerFaceAlpha',.5)
 xlabel('Dim 1')
 ylabel('Dim 2')
 zlabel('Dim 3')
@@ -46,7 +46,7 @@ view(118,29)
 caxis([0 30])
 
 subplot(1,3,2)
-scatter3(y(:,1), y(:,2), y(:,3), [], smooth_DE, '.')
+scatter3(y(:,1), y(:,2), y(:,3), 20, smooth_DE,'filled','MarkerFaceAlpha',.5)
 xlabel('Dim 1')
 ylabel('Dim 2')
 zlabel('Dim 3')

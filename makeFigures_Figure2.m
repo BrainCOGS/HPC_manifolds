@@ -211,5 +211,3 @@ r2=r2*3
 [p3, r3] = ttest(skaggsMetric_All_ExR_Real_Sig, skaggsMetric_All_RxY_Real_Sig);
 r3=r3*3
 
-%% Significant neurons
-

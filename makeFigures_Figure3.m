@@ -28,6 +28,7 @@ collect_allTrials_reconstructionMultipleTrials
 %% Reconstruction scores
 
 clear all; 
+fnameStruct = mind_makeFnameStruct('Edward','towers','laptop');
 
 % First run run_analysis_allTrials on matlab on spock to generate the
 % held-out trial data
@@ -36,6 +37,20 @@ collect_allTrials_2to7_minLeaves500
 
 figure; 
 nieh_barSEM(maxReconstruct(1,:), maxReconstruct(2,:), maxReconstruct(3,:), maxReconstruct(4,:), maxReconstruct(5,:), maxReconstruct(6,:));
+hold on;
+scatter([ones(length(fnameStruct),1); ...
+                 ones(length(fnameStruct),1)*2; ...
+                 ones(length(fnameStruct),1)*3; ...
+                 ones(length(fnameStruct),1)*4; ...
+                 ones(length(fnameStruct),1)*5; ...
+                 ones(length(fnameStruct),1)*6; ...
+                 ],[maxReconstruct(1,:) ...
+                    maxReconstruct(2,:) ...
+                    maxReconstruct(3,:) ...
+                    maxReconstruct(4,:) ...
+                    maxReconstruct(5,:) ...
+                    maxReconstruct(6,:) ...
+                    ], '.');
 ylabel('Mean Cross-Validated Score');
 xticklabels({'2', '3', '4', '5', '6', '7'});
 xlabel('Num Embedding Dims');
@@ -75,7 +90,7 @@ fnameStruct = mind_makeFnameStruct('Edward','towers','laptop');
 outputTiledFields = mind_plotTiledFieldsSLIM(fnameStruct(7).fname, fnameStruct(7).fname_mani);
 
 % To generate the movie, after running mind_plotTiledFields:
-movieName = 'Supp_movie_2';
+movieName = 'Supp_movie_2_20210420_greaterthanequalto';
 mind_makeTiledMovie(outputTiledFields.manifold3d, outputTiledFields.ROIactivities_thres, movieName);
 
 
@@ -90,7 +105,7 @@ set(gcf,'renderer','painters');
 
 fnameStruct = mind_makeFnameStruct('Edward','towers','laptop');
 
-% Load data from "C:\Neuroscience\imaging\FINAL\decoding_Data\decodeEandY_all.mat"
+load("C:\Neuroscience\imaging\FINAL\decoding_Data\decodeEandY_all.mat")
 % Or run the following
 
 dimEmbedList = [2:7];
@@ -108,11 +123,9 @@ for i=1:length(fnameStruct)
     end
     
     outputNonlinearDecoding_ROIs_E = mind_nonlinearDecoding_dimX_All(fnameStruct(i).fname, fnameStruct(i).fname_mani,5,'GP','Evidence','towers',0,0,[],[]);
-    outputNonlinearDecoding_ROIsAll_E{i,j} = outputNonlinearDecoding_ROIs_E;
     meancorrROIsAll_E(i) = outputNonlinearDecoding_ROIs_E.meancorr;
     
     outputNonlinearDecoding_ROIs_Y = mind_nonlinearDecoding_dimX_All(fnameStruct(i).fname, fnameStruct(i).fname_mani,5,'GP','Position','towers',0,0,[],[]);
-    outputNonlinearDecoding_ROIsAll_Y{i,j} = outputNonlinearDecoding_ROIs_Y;
     meancorrROIsAll_Y(i) = outputNonlinearDecoding_ROIs_Y.meancorr;
     
     disp(['Animal ' num2str(i) ' of ' num2str(length(fnameStruct)) ', ROI finished']);

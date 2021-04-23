@@ -100,27 +100,19 @@ outputFitPowerLaw.ci_l    = ci_l;
 
 %% Calculate N as function of distance for all landmarks
 
+colorlist = [0, 0.4470, 0.7410; ...
+            0.8500, 0.3250, 0.0980; ...
+            0.9290, 0.6940, 0.1250; ...
+            0.4940, 0.1840, 0.5560; ...
+            0.4660, 0.6740, 0.1880; ...
+            0.3010, 0.7450, 0.9330; ...
+            0.6350, 0.0780, 0.1840];
+
 if toggleTrialNormalization==1
     
     figure
     hold on;
     for i=1:length(fnameStruct)
-        
-        if i==1
-            c = [0, 0.4470, 0.7410];
-        elseif i==2
-            c = [0.8500, 0.3250, 0.0980];
-        elseif i==3
-            c = [0.9290, 0.6940, 0.1250];
-        elseif i==4
-            c = [0.4940, 0.1840, 0.5560];
-        elseif i==5
-            c = [0.4660, 0.6740, 0.1880];
-        elseif i==6
-            c = [0.3010, 0.7450, 0.9330];
-        elseif i==7
-            c = [0.6350, 0.0780, 0.1840];
-        end
         
         load(fnameStruct(i).fname_mani);
         data = outMind.dat.forestdat.rwd.Dg;
@@ -148,15 +140,28 @@ if toggleTrialNormalization==1
                 le = best-1e-6;
             end
             ue = m(975)-best;
-            errorbar(xInputs(idx)./(triallength/2.), best, le, ue, '.', 'MarkerFaceColor', c, 'MarkerEdgeColor', c , 'Color',c, 'LineWidth', 1, 'CapSize', 0)
+            % errorbar(xInputs(idx)./(triallength/2.), best, le, ue, '.', 'MarkerFaceColor', c, 'MarkerEdgeColor', c , 'Color',c, 'LineWidth', 1, 'CapSize', 0)
+            tempX(idx,i) = xInputs(idx)./(triallength/2.);
+            save_best(idx) = best;
+            tempLe(idx,i) = le;
+            tempUe(idx,i) = ue;
             disp(xInputs(idx))
         end
+        tempCs(:,i) = mean(Cs,2);
+        temptriallength(i)= triallength;
+       % plot(xInputs./(triallength/2.), mean(Cs,2), 'Color', c, 'LineWidth', 2)
         
-        tempCs{i} = mean(Cs,2);
-        temptriallength{i} = triallength;
-        plot(xInputs./(triallength/2.), mean(Cs,2), 'Color', c, 'LineWidth', 2)
     end
-        set(gca, 'YScale', 'log')
+    
+    figure;
+    hold on;
+    for i=1:length(fnameStruct)
+        c = colorlist(i,:);
+        errorbar(tempX(:,i), tempCs(:,i), tempLe(:,i), tempUe(:,i), '.', 'MarkerFaceColor', c, 'MarkerEdgeColor', c , 'Color',c, 'LineWidth', 1, 'CapSize', 0)
+        plot(tempX(:,i), tempCs(:,i), 'Color', c, 'LineWidth', 2)
+    end
+    
+    set(gca, 'YScale', 'log')
     set(gca, 'XScale', 'log')
     
     for s = 10.^[-4,-2,0,2,4,6,8,10,12,14]
@@ -172,6 +177,10 @@ if toggleTrialNormalization==1
     title(['Dotted Lines are exponent = ' num2str(expPlot)])
     
     outputFitPowerLaw.tempCs = tempCs;
+    outputFitPowerLaw.tempX = tempX;
+    outputFitPowerLaw.tempLe = tempLe;
+    outputFitPowerLaw.tempUe = tempUe;
+    outputFitPowerLaw.colorlist = colorlist;
     outputFitPowerLaw.temptriallength = temptriallength;
     
 end

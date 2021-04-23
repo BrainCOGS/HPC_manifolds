@@ -82,17 +82,7 @@ reconstructedAll_11_4 = mind_preprocess(reconstructedAll_11_4,11,4);
 %% Plotting, the normalization is within the window
 
 figure;
-ax1 = subplot(2,2,1);
-imagesc(mat2gray(ROIactivities(400:600,1:40)'));
-xticks([0 5*(1/deltaT) 10*(1/deltaT)])
-xticklabels({'0' '5' '10'});
-set(gca, 'box', 'off')
-ylabel('Neuron #');
-xlabel('Time (s)');
-title('raw')
-axis square
-
-ax2 = subplot(2,2,2);
+ax1 = subplot(1,2,1);
 imagesc(mat2gray(ROIactivities_11_4(400:600,1:40)'));
 xticks([0 5*(1/deltaT) 10*(1/deltaT)])
 xticklabels({'0' '5' '10'});
@@ -102,16 +92,7 @@ xlabel('Time (s)');
 title('raw (smoothed and thresholded)')
 axis square
 
-ax3 = subplot(2,2,3);
-imagesc(mat2gray(reconstructedAll(400:600,1:40)'));
-xticks([0 5*(1/deltaT) 10*(1/deltaT)])
-xticklabels({'0' '5' '10'});
-set(gca, 'box', 'off')
-xlabel('Time (s)');
-title('reconstructed')
-axis square
-
-ax4 = subplot(2,2,4);
+ax2 = subplot(1,2,2);
 imagesc(mat2gray(reconstructedAll_11_4(400:600,1:40)'));
 xticks([0 5*(1/deltaT) 10*(1/deltaT)])
 xticklabels({'0' '5' '10'});
@@ -120,5 +101,5 @@ xlabel('Time (s)');
 title('reconstructed (smoothed and thresholded)')
 axis square
 
-Link = linkprop([ax1 ax2 ax3 ax4],{'XLim', 'YLim', 'ZLim'});
+Link = linkprop([ax1 ax2],{'XLim', 'YLim', 'ZLim'});
 
