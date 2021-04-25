@@ -75,7 +75,7 @@ for i = 1:numberPlot
     
     % axis square
     if i == 2
-        title('Selected ROIs Average Map vs Shuffle Shroud (surface)');
+        title('Selected ROIs Average Map');
     end
 end
 clear i

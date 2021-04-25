@@ -28,12 +28,16 @@ collect_allTrials_reconstructionMultipleTrials
 %% Reconstruction scores
 
 clear all; 
+
 fnameStruct = mind_makeFnameStruct('Edward','towers','laptop');
 
 % First run run_analysis_allTrials on matlab on spock to generate the
 % held-out trial data
 
-collect_allTrials_2to7_minLeaves500
+% load("C:\Neuroscience\imaging\FINAL\reconstructTrials_Data\maxReconstruct.mat");
+% Or run this code:
+maxReconstruct = collect_allTrials_2to7_minLeaves500(fnameStruct);
+sourceData_3c = maxReconstruct;
 
 figure; 
 nieh_barSEM(maxReconstruct(1,:), maxReconstruct(2,:), maxReconstruct(3,:), maxReconstruct(4,:), maxReconstruct(5,:), maxReconstruct(6,:));

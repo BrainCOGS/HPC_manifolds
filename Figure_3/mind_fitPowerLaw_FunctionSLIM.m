@@ -110,8 +110,6 @@ colorlist = [0, 0.4470, 0.7410; ...
 
 if toggleTrialNormalization==1
     
-    figure
-    hold on;
     for i=1:length(fnameStruct)
         
         load(fnameStruct(i).fname_mani);

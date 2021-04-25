@@ -109,72 +109,72 @@ outputReconstructionMultipleROIs.reconstructedAll = reconstructedAll;
 outputReconstructionMultipleROIs.corrAll = corrAll;
 
 
-%% Collect and plot if it's E43 and it's the full 40 rois
-
-if strcmp(aniN, 'E43')==1 && length(roiList)==40
-    
-    % set to 1 less than desired dim
-    % reconstructedAll = squeeze(reconstructedAll(:,:,4));
-    
-    trialsList = [145 146 147 148 149 151 152 153 154 157 158 159 160];
-    nic_output = extractVariables('all', 2, trialsList, 2, 0, 0, 5, [0 0], fname,'none','towers',1,1);
-    ROIactivities = nic_output.ROIactivities;
-    
-    nic_output2 = extractVariables('all', 2, trialsList, 2, 0, 0, 5, [11 4], fname,'none','towers',1,1);
-    ROIactivities_11_4 = nic_output2.ROIactivities;
-    
-    ROIactivities_11_4_Datarange    = sum(ROIactivities_11_4,2)>0;
-    ROIactivities_11_4 = ROIactivities_11_4(ROIactivities_11_4_Datarange,:);
-    ROIactivities = ROIactivities(ROIactivities_11_4_Datarange,:);
-    
-    % Get the reconstructedAll data that's only in the desired trials
-    trialsKeep = ismember(behavioralVariablesFull.Trial,trialsList);
-    justTrialData = reconstructedAll(trialsKeep,:);
-    justTrialData = justTrialData(ROIactivities_11_4_Datarange,:);
-    reconstructedAll_11_4 = reconstructedAll - mean(reconstructedAll);
-    reconstructedAll_11_4 = mind_preprocess(reconstructedAll_11_4,11,4);
-    justTrialData_11_4 = reconstructedAll_11_4(trialsKeep,:);
-    justTrialData_11_4 = justTrialData_11_4(ROIactivities_11_4_Datarange,:);
-    
-    mean(corrAll)
-    std(corrAll)
-    
-    figure;
-    ax1 = subplot(2,2,1);
-    imagesc(mat2gray(ROIactivities(400:600,1:40)'));
-    xticks([0 5*(1/.0694) 10*(1/.0694)])
-    xticklabels({'0' '5' '10'});
-    set(gca, 'box', 'off')
-    ylabel('Neuron #');
-    title('raw')
-    axis square
-    
-    ax2 = subplot(2,2,2);
-    imagesc(mat2gray(ROIactivities_11_4(400:600,1:40)'));
-    xticks([0 5*(1/.0694) 10*(1/.0694)])
-    xticklabels({'0' '5' '10'});
-    set(gca, 'box', 'off')
-    ylabel('Neuron #');
-    title('raw (smoothed and thresholded)')
-    axis square
-    
-    ax3 = subplot(2,2,3);
-    imagesc(mat2gray(justTrialData(400:600,1:40)'));
-    xticks([0 5*(1/.0694) 10*(1/.0694)])
-    xticklabels({'0' '5' '10'});
-    set(gca, 'box', 'off')
-    xlabel('Time (s)');
-    title('reconstructed')
-    axis square
-    
-    ax4 = subplot(2,2,4);
-    imagesc(mat2gray(justTrialData_11_4(400:600,1:40)'));
-    xticks([0 5*(1/.0694) 10*(1/.0694)])
-    xticklabels({'0' '5' '10'});
-    set(gca, 'box', 'off')
-    title('reconstructed (smoothed and thresholded)')
-    axis square
-    
-    suptitle('Reconstruct Held-Out ROI');
-    
-end
+% %% Collect and plot if it's E43 and it's the full 40 rois
+% 
+% if strcmp(aniN, 'E43')==1 && length(roiList)==40
+%     
+%     % set to 1 less than desired dim
+%     % reconstructedAll = squeeze(reconstructedAll(:,:,4));
+%     
+%     trialsList = [145 146 147 148 149 151 152 153 154 157 158 159 160];
+%     nic_output = extractVariables('all', 2, trialsList, 2, 0, 0, 5, [0 0], fname,'none','towers',1,1);
+%     ROIactivities = nic_output.ROIactivities;
+%     
+%     nic_output2 = extractVariables('all', 2, trialsList, 2, 0, 0, 5, [11 4], fname,'none','towers',1,1);
+%     ROIactivities_11_4 = nic_output2.ROIactivities;
+%     
+%     ROIactivities_11_4_Datarange    = sum(ROIactivities_11_4,2)>0;
+%     ROIactivities_11_4 = ROIactivities_11_4(ROIactivities_11_4_Datarange,:);
+%     ROIactivities = ROIactivities(ROIactivities_11_4_Datarange,:);
+%     
+%     % Get the reconstructedAll data that's only in the desired trials
+%     trialsKeep = ismember(behavioralVariablesFull.Trial,trialsList);
+%     justTrialData = reconstructedAll(trialsKeep,:);
+%     justTrialData = justTrialData(ROIactivities_11_4_Datarange,:);
+%     reconstructedAll_11_4 = reconstructedAll - mean(reconstructedAll);
+%     reconstructedAll_11_4 = mind_preprocess(reconstructedAll_11_4,11,4);
+%     justTrialData_11_4 = reconstructedAll_11_4(trialsKeep,:);
+%     justTrialData_11_4 = justTrialData_11_4(ROIactivities_11_4_Datarange,:);
+%     
+%     mean(corrAll)
+%     std(corrAll)
+%     
+%     figure;
+%     ax1 = subplot(2,2,1);
+%     imagesc(mat2gray(ROIactivities(400:600,1:40)'));
+%     xticks([0 5*(1/.0694) 10*(1/.0694)])
+%     xticklabels({'0' '5' '10'});
+%     set(gca, 'box', 'off')
+%     ylabel('Neuron #');
+%     title('raw')
+%     axis square
+%     
+%     ax2 = subplot(2,2,2);
+%     imagesc(mat2gray(ROIactivities_11_4(400:600,1:40)'));
+%     xticks([0 5*(1/.0694) 10*(1/.0694)])
+%     xticklabels({'0' '5' '10'});
+%     set(gca, 'box', 'off')
+%     ylabel('Neuron #');
+%     title('raw (smoothed and thresholded)')
+%     axis square
+%     
+%     ax3 = subplot(2,2,3);
+%     imagesc(mat2gray(justTrialData(400:600,1:40)'));
+%     xticks([0 5*(1/.0694) 10*(1/.0694)])
+%     xticklabels({'0' '5' '10'});
+%     set(gca, 'box', 'off')
+%     xlabel('Time (s)');
+%     title('reconstructed')
+%     axis square
+%     
+%     ax4 = subplot(2,2,4);
+%     imagesc(mat2gray(justTrialData_11_4(400:600,1:40)'));
+%     xticks([0 5*(1/.0694) 10*(1/.0694)])
+%     xticklabels({'0' '5' '10'});
+%     set(gca, 'box', 'off')
+%     title('reconstructed (smoothed and thresholded)')
+%     axis square
+%     
+%     suptitle('Reconstruct Held-Out ROI');
+%     
+% end

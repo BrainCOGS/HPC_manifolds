@@ -65,9 +65,7 @@ Per_ExYBoth = ExYboth./totalROI;
 Per_ExYInd  = Per_Yall.*Per_Eall;
 
 figure;
-nieh_barSEM(Per_ExYBoth, Per_ExYInd);
-hold on;
-plot([Per_ExYBoth; Per_ExYInd], 'o-k');
+nieh_barSEMpaired(Per_ExYBoth, Per_ExYInd);
 signrank(Per_ExYBoth, Per_ExYInd)
 xticklabels({'p(ExY)', 'p(RxY)*p(ExR)'});
 
@@ -79,11 +77,15 @@ sum_Eonly   = sum(Eonly)/sum(totalROI)
 sum_ExYboth = sum(ExYboth)/sum(totalROI)
 sum_none    = 1-(sum_Yonly+sum_Eonly+sum_ExYboth)
 
+sourceData_S2d = [sum(Yonly) sum(Eonly) sum(ExYboth)];
+sourceData_S2f = [Per_ExYBoth; Per_ExYInd]';
+
+
 %% Find distribution of ExR and RxY skaggs values
 
 fnameStruct = mind_makeFnameStruct('Edward','towers','laptop');
 
-load("C:\Neuroscience\imaging\FINAL\getSkaggs_Data\out_ExRtemp_and_RxYtemp_FigS2.mat")
+% load("C:\Neuroscience\imaging\FINAL\getSkaggs_Data\out_ExRtemp_and_RxYtemp_FigS2.mat")
 % Or run the following
 % Make sure you're in the shuffle folder!!
 % rng(1);
@@ -153,7 +155,7 @@ load("C:\Neuroscience\imaging\FINAL\getSkaggs_Data\out_ExRtemp_and_RxYtemp_FigS2
 
 % Run the analysis
 
-load("C:\Neuroscience\imaging\FINAL\getSkaggs_Data\out_ExY_all.mat");
+% load("C:\Neuroscience\imaging\FINAL\getSkaggs_Data\out_ExY_all.mat");
 
 for i=1:7
     

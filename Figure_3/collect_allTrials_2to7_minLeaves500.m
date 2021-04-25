@@ -1,9 +1,7 @@
+function maxReconstruct = collect_allTrials_2to7_minLeaves500(fnameStruct)
 
 %% Collects results
 
-fnameStruct = mind_makeFnameStruct('Edward','towers','laptop');
-
-%% Setup
 animalList = {'E22', 'E39', 'E43', 'E44', 'E47', 'E48', 'E65'};
 
 config.input_rng = 1;           % random seed

@@ -122,6 +122,8 @@ skaggsMetric_All_ExY_Real_Sig_log = log(skaggsMetric_All_ExY_Real_Sig);
 skaggsMetric_All_RxY_Real_Sig_log = log(skaggsMetric_All_RxY_Real_Sig);
 skaggsMetric_All_ExR_Real_Sig_log = log(skaggsMetric_All_ExR_Real_Sig);
 
+sourceData_2e = [skaggsMetric_All_ExY_Real_Sig_log; skaggsMetric_All_RxY_Real_Sig_log; skaggsMetric_All_ExR_Real_Sig_log]';
+
 figure; 
 %scatter(ones(size(skaggsMetric_All_ExY_Real_Sig)).*(1+(rand(size(skaggsMetric_All_ExY_Real_Sig))-0.5)/5),skaggsMetric_All_ExY_Real_Sig,5,'k','filled','MarkerFaceAlpha',0.2);
 %scatter(ones(size(skaggsMetric_All_RxY_Real_Sig)).*(2+(rand(size(skaggsMetric_All_RxY_Real_Sig))-0.5)/5),skaggsMetric_All_RxY_Real_Sig,5,'k','filled','MarkerFaceAlpha',0.2);
@@ -138,45 +140,22 @@ title('Significant ROIs');
 set(gca,'box','off')
 set(gca, 'FontName', 'Arial')
 set(gcf, 'Position', [100, 340, 313, 420])
-% 
-% figure; 
-% h=boxplot([pair1; pair2; pair3]','Whisker',1000,'PlotStyle','traditional','Widths',.3,'Colors','k');
-% set(h,{'linew'},{2})
-% hold on;
-% scatter(ones(size(pair1)).*(1+(rand(size(pair1))-0.5)/5),pair1,5,'k','filled','MarkerFaceAlpha',0.2);
-% scatter(ones(size(pair2)).*(2+(rand(size(pair2))-0.5)/5),pair2,5,'k','filled','MarkerFaceAlpha',0.2);
-% scatter(ones(size(pair3)).*(3+(rand(size(pair3))-0.5)/5),pair3,5,'k','filled','MarkerFaceAlpha',0.2);
-% ylim([-0.06 .12]);
-% xticklabels({'E x Y - Random x Y','E x Y - E x Random','Random x Y - E x Random'});
-% xtickangle(45)
-% ylabel('Difference Mutual Information Value');
-% title('Significant ROIs');
-% set(gca,'box','off')
-% set(gca, 'FontName', 'Arial')
-% 
-% figure; 
-% subplot(1,2,1)
-% bar(skaggsMetric_All_mean_Sig);
-% hold on;
-% er = errorbar([1:3], skaggsMetric_All_mean_Sig, [0 0 0], skaggsMetric_All_sem_Sig);
-% er.LineStyle = 'none'; 
-% er.Color = 'b';   
-% ylim([0 .03]);
-% xticklabels({'E x Y','Random x Y','E x Random'});
-% xtickangle(45)
-% ylabel('Mean Mutual Information Value');
-% title('Significant ROIs');
-% 
-% subplot(1,2,2)
-% bar(skaggsMetric_All_mean);
-% hold on;
-% er = errorbar([1:3], skaggsMetric_All_mean, [0 0 0], skaggsMetric_All_sem);
-% er.LineStyle = 'none'; 
-% er.Color = 'b';   
-% ylim([0 .03]);
-% xticklabels({'E x Y','Random x Y','E x Random'});
-% xtickangle(45)
-% title('All ROIs');
+
+% Multiply values by 3 because there are three comparisons
+[p1, r1] = ttest(skaggsMetric_All_ExY_Real_Sig, skaggsMetric_All_RxY_Real_Sig);
+r1=r1*3
+
+[p2, r2] = ttest(skaggsMetric_All_ExY_Real_Sig, skaggsMetric_All_ExR_Real_Sig);
+r2=r2*3
+
+[p3, r3] = ttest(skaggsMetric_All_ExR_Real_Sig, skaggsMetric_All_RxY_Real_Sig);
+r3=r3*3
+
+
+%% This was moved to S2
+
+sourceData_S2b = [skaggsMetric_All_ExY_Real_Sig; skaggsMetric_All_RxY_Real_Sig]';
+sourceData_S2c = [skaggsMetric_All_ExY_Real_Sig; skaggsMetric_All_ExR_Real_Sig]';
 
 figure; 
 subplot(1,2,1)
@@ -201,13 +180,4 @@ ylabel('ExR');
 
 suptitle('SkaggsMetric, All - Real & Sig');
 
-% Multiply values by 3 because there are three comparisons
-[p1, r1] = ttest(skaggsMetric_All_ExY_Real_Sig, skaggsMetric_All_RxY_Real_Sig);
-r1=r1*3
-
-[p2, r2] = ttest(skaggsMetric_All_ExY_Real_Sig, skaggsMetric_All_ExR_Real_Sig);
-r2=r2*3
-
-[p3, r3] = ttest(skaggsMetric_All_ExR_Real_Sig, skaggsMetric_All_RxY_Real_Sig);
-r3=r3*3
 

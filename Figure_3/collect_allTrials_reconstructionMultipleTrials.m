@@ -103,3 +103,5 @@ axis square
 
 Link = linkprop([ax1 ax2],{'XLim', 'YLim', 'ZLim'});
 
+sourceData_3b_1 = mat2gray(ROIactivities_11_4(400:600,1:40)');
+sourceData_3b_2 = mat2gray(reconstructedAll_11_4(400:600,1:40)');
