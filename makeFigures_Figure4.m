@@ -24,10 +24,15 @@ load('C:\Neuroscience\imaging\FINAL\sequences_Data\outputDoubletsTriplets_all.ma
 
 %% Plot the example doublets (Fig. 4a)
 
+load('C:\Neuroscience\imaging\FINAL\sequences_Data\outputDoubletsTriplets_all.mat')
 load(fnameStruct(2).fname);
 deltaT = score.deltaT;
-plotSequenceTrialROI(219,outputDoublets_E39, fnameStruct(2).fname, deltaT);
-plotSequenceTrialROI(122,outputDoublets_E39, fnameStruct(2).fname, deltaT);
+
+% ****************IMPORTANT***************************************
+% Need to manually delete the zeros at the end because of how matlab
+% generates the cell arrays
+sourceData_4a_ex1 = plotSequenceTrialROI(219,outputDoublets_E39, fnameStruct(2).fname, deltaT);
+sourceData_4a_ex2 = plotSequenceTrialROI(122,outputDoublets_E39, fnameStruct(2).fname, deltaT);
 
 
 %% Make the metamouse and generate plots (Fig. 4b-c, f-j 
@@ -55,6 +60,7 @@ load('C:\Neuroscience\imaging\FINAL\sequences_Data\outputDoubletManiCorrs_all.ma
 
 % Or run this code:
 
+% load('C:\Neuroscience\imaging\FINAL\sequences_Data\outputDoubletsTriplets_all.mat')
 % outputDoubletManiCorrs_E22 = calcDoubletManifoldCorrelation(fnameStruct(1).fname, fnameStruct(1).fname_mani, 100, 5, outputDoublets_E22);
 % outputDoubletManiCorrs_E39 = calcDoubletManifoldCorrelation(fnameStruct(2).fname, fnameStruct(2).fname_mani, 100, 5, outputDoublets_E39);
 % outputDoubletManiCorrs_E43 = calcDoubletManifoldCorrelation(fnameStruct(3).fname, fnameStruct(3).fname_mani, 100, 5, outputDoublets_E43);

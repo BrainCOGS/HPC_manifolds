@@ -10,17 +10,18 @@ sourceData_S4d = plot_allTrials_reconstructionMultipleROIs_Function(outputRecons
 
 %% Get the correlation coefficient in the 10 held-out ROIs in all animals
 
-% Used the .sh files, i.e. mind_collect_reconstructionROIs_E43.sh to
+% Used the .sh files, i.e. "M:\enieh\mind\mind_collect_reconstructionROIs_E43_spock.sh" to
 % generate the outputReconstructionMultipleROIs files
 % Needed to manually add the 10 trials for E43, since they're chosen
-% randomly from the top 25 but also in first 40
+% randomly from the top 25 but also in first 40 (this is taken care of in
+% the .sh file already
+
+% OLD ****************************************************
 % Editted code to fix the idim starting at 1, but this dataset has the 
 % additional column, so I manually editted out the extra column and saved
 % as the data from the folder: C:\Neuroscience\imaging\FINAL\reconstructROIs_Data
 
-fnameStruct = mind_makeFnameStruct('Edward','towers','laptop');
-
-outputReconstructionMultipleROIs_E43 = collect_allTrials_reconstructionMultipleROIs_Function(fnameStruct, '\\192.168.0.233\Neuroscience\CrossValidation_holdOneCell\', 'E43', [2 6 8 9 14 20 26 28 31 34]);
+% outputReconstructionMultipleROIs_E43 = collect_allTrials_reconstructionMultipleROIs_Function(fnameStruct, '\\192.168.0.233\Neuroscience\CrossValidation_holdOneCell\', 'E43', [2 6 8 9 14 20 26 28 31 34]);
 
 % for i=1:length(fnameStruct)
 %     if i==3
@@ -33,8 +34,11 @@ outputReconstructionMultipleROIs_E43 = collect_allTrials_reconstructionMultipleR
 %     % NEED TO FIX TO MANUALLY SET ROIs FOR E43
 %     %***************************************************
 % end
+% OLD END *************************************************
 
 % Load the data from the folder: C:\Neuroscience\imaging\FINAL\reconstructROIs_Data
+
+fnameStruct = mind_makeFnameStruct('Edward','towers','laptop');
 
 corrAll(1,:) = mean(outputReconstructionMultipleROIs_E22.corrAll,1);
 corrAll(2,:) = mean(outputReconstructionMultipleROIs_E39.corrAll,1);

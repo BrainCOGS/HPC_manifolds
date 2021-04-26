@@ -9,7 +9,8 @@
 % Do the same for Position + Time
 
 %filelocation = 'D:\Encoding\';
-filelocation = 'M:\enieh\mind\FINAL\Towers\Encoding\';
+%filelocation = 'M:\enieh\mind\FINAL\Towers\Encoding\';
+filelocation = 'C:\Neuroscience\imaging\FINAL\encoding_Data\';
 animals = {'E22', 'E39', 'E43', 'E44', 'E47', 'E48', 'E65'};
 
 % View angle and evidence
@@ -29,6 +30,7 @@ xticks([1 2]);
 xticklabels({'VA+R_E', 'VA+E'});
 title(['Sign rank p-value is: ' num2str(signrank(all_coefs(:,2), all_coefs(:,1)))]);
 
+sourceData_S6b = all_coefs;
 
 % Position and Y velocity
 for i=1:length(animals)
@@ -47,6 +49,8 @@ xticks([1 2]);
 xticklabels({'Y+R_yV', 'Y+yV'});
 title(['Sign rank p-value is: ' num2str(signrank(all_coefs(:,2), all_coefs(:,1)))]);
 
+sourceData_S6c = all_coefs;
+
 % Position and Time
 for i=1:length(animals)
     load([filelocation animals{i} '_PositionTime_testVar_standardizeF.mat']);
@@ -63,6 +67,8 @@ ylabel("Decoding Index")
 xticks([1 2]);
 xticklabels({'Y+R_T', 'Y+T'});
 title(['Sign rank p-value is: ' num2str(signrank(all_coefs(:,2), all_coefs(:,1)))]);
+
+sourceData_S6d = all_coefs;
 
 
 %% Decode the PC1 and PC2 of E and VA from 5-dim manifold

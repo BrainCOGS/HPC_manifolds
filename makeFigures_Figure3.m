@@ -127,9 +127,11 @@ for i=1:length(fnameStruct)
     end
     
     outputNonlinearDecoding_ROIs_E = mind_nonlinearDecoding_dimX_All(fnameStruct(i).fname, fnameStruct(i).fname_mani,5,'GP','Evidence','towers',0,0,[],[]);
+    outputNonlinearDecoding_ROIsAll_E{i,j} = outputNonlinearDecoding_ROIs_E;
     meancorrROIsAll_E(i) = outputNonlinearDecoding_ROIs_E.meancorr;
     
     outputNonlinearDecoding_ROIs_Y = mind_nonlinearDecoding_dimX_All(fnameStruct(i).fname, fnameStruct(i).fname_mani,5,'GP','Position','towers',0,0,[],[]);
+    outputNonlinearDecoding_ROIsAll_Y{i,j} = outputNonlinearDecoding_ROIs_Y;
     meancorrROIsAll_Y(i) = outputNonlinearDecoding_ROIs_Y.meancorr;
     
     disp(['Animal ' num2str(i) ' of ' num2str(length(fnameStruct)) ', ROI finished']);

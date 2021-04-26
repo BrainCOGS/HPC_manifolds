@@ -88,69 +88,75 @@ fnameStruct = mind_makeFnameStruct('Edward','towers','laptop');
 % load("C:\Neuroscience\imaging\FINAL\getSkaggs_Data\out_ExRtemp_and_RxYtemp_FigS2.mat")
 % Or run the following
 % Make sure you're in the shuffle folder!!
-% rng(1);
-% 
+
+% rng(42);
 % for i=1:50
-% out_E22_ExRtemp{i} = getSkaggs([5 2], 'noLog', 1, 'keepTrials', 0, 'E22_ExR_[5_2]_%d.mat', 1, fnameStruct(1).fname, 2, {'Evidence', 'Random'}, {[-15:16], []}, {'Position', 'Evidence'}, {[0:10:300], [-15:16]}, 'towers', 'all', 'both');
-% out_E22_RxYtemp{i} = getSkaggs([5 2], 'noLog', 1, 'keepTrials', 0, 'E22_RxY_[5_2]_%d.mat', 1, fnameStruct(1).fname, 2, {'Position', 'Random'}, {[0:10:300], []}, {'Evidence', 'Position'}, {[-15:16], [0:10:300]}, 'towers', 'all', 'both');
-% skaggsDExR_E22(i,:) = out_E22_ExRtemp{i}.skaggsMetric.skaggs_real;
-% skaggsDRxY_E22(i,:) = out_E22_RxYtemp{i}.skaggsMetric.skaggs_real;
-% close all;
-% disp(['E22: ' num2str(i) ' of 50 shuffles done']);
+%     out_E22_ExRtemp{i} = getSkaggs_cutdown([5 2], 'noLog', 1, 'keepTrials', 0, 'E22_ExR_[5_2]_%d.mat', 1, fnameStruct(1).fname, 2, {'Evidence', 'Random'}, {[-15:16], []}, {'Position', 'Evidence'}, {[0:10:300], [-15:16]}, 'towers', 'all', 'both');
+%     out_E22_RxYtemp{i} = getSkaggs_cutdown([5 2], 'noLog', 1, 'keepTrials', 0, 'E22_RxY_[5_2]_%d.mat', 1, fnameStruct(1).fname, 2, {'Position', 'Random'}, {[0:10:300], []}, {'Evidence', 'Position'}, {[-15:16], [0:10:300]}, 'towers', 'all', 'both');
+%     skaggsDExR_E22(i,:) = out_E22_ExRtemp{i}.skaggsMetric.skaggs_real;
+%     skaggsDRxY_E22(i,:) = out_E22_RxYtemp{i}.skaggsMetric.skaggs_real;
+%     close all;
+%     disp(['E22: ' num2str(i) ' of 50 shuffles done']);
 % end
 % 
+% rng(42);
 % for i=1:50
-% out_E39_ExRtemp = getSkaggs([5 2], 'noLog', 1, 'keepTrials', 0, 'E39_ExR_[5_2]_%d.mat', 1, 'C:\Neuroscience\imaging\FINAL\E39_20171103_40per_userSetSD11minDur0.modelingFINAL.mat', 2, {'Evidence', 'Random'}, {[-15:16], []}, {'Position', 'Evidence'}, {[0:10:300], [-15:16]}, 'towers', 'all', 'both');
-% out_E39_RxYtemp = getSkaggs([5 2], 'noLog', 1, 'keepTrials', 0, 'E39_RxY_[5_2]_%d.mat', 1, 'C:\Neuroscience\imaging\FINAL\E39_20171103_40per_userSetSD11minDur0.modelingFINAL.mat', 2, {'Position', 'Random'}, {[0:10:300], []}, {'Evidence', 'Position'}, {[-15:16], [0:10:300]}, 'towers', 'all', 'both');
-% skaggsDExR_E39(i,:) = out_E39_ExRtemp.skaggsMetric.skaggs_real;
-% skaggsDRxY_E39(i,:) = out_E39_RxYtemp.skaggsMetric.skaggs_real;
-% close all;
-% disp(['E39: ' num2str(i) ' of 50 shuffles done']);
+%     out_E39_ExRtemp = getSkaggs_cutdown([5 2], 'noLog', 1, 'keepTrials', 0, 'E39_ExR_[5_2]_%d.mat', 1, 'C:\Neuroscience\imaging\FINAL\E39_20171103_40per_userSetSD11minDur0.modelingFINAL.mat', 2, {'Evidence', 'Random'}, {[-15:16], []}, {'Position', 'Evidence'}, {[0:10:300], [-15:16]}, 'towers', 'all', 'both');
+%     out_E39_RxYtemp = getSkaggs_cutdown([5 2], 'noLog', 1, 'keepTrials', 0, 'E39_RxY_[5_2]_%d.mat', 1, 'C:\Neuroscience\imaging\FINAL\E39_20171103_40per_userSetSD11minDur0.modelingFINAL.mat', 2, {'Position', 'Random'}, {[0:10:300], []}, {'Evidence', 'Position'}, {[-15:16], [0:10:300]}, 'towers', 'all', 'both');
+%     skaggsDExR_E39(i,:) = out_E39_ExRtemp.skaggsMetric.skaggs_real;
+%     skaggsDRxY_E39(i,:) = out_E39_RxYtemp.skaggsMetric.skaggs_real;
+%     close all;
+%     disp(['E39: ' num2str(i) ' of 50 shuffles done']);
 % end
 % 
+% rng(42);
 % for i=1:50
-% out_E43_ExRtemp = getSkaggs([5 2], 'noLog', 1, 'keepTrials', 0, 'E43_ExR_[5_2]_%d.mat', 1, 'C:\Neuroscience\imaging\FINAL\E43_20170802_70per_userSetSD5minDur0.modelingFINAL.mat',  2, {'Evidence', 'Random'}, {[-15:16], []}, {'Position', 'Evidence'}, {[0:10:300], [-15:16]}, 'towers', 'all', 'both');
-% out_E43_RxYtemp = getSkaggs([5 2], 'noLog', 1, 'keepTrials', 0, 'E43_RxY_[5_2]_%d.mat', 1, 'C:\Neuroscience\imaging\FINAL\E43_20170802_70per_userSetSD5minDur0.modelingFINAL.mat',  2, {'Position', 'Random'}, {[0:10:300], []}, {'Evidence', 'Position'}, {[-15:16], [0:10:300]}, 'towers', 'all', 'both');
-% skaggsDExR_E43(i,:) = out_E43_ExRtemp.skaggsMetric.skaggs_real;
-% skaggsDRxY_E43(i,:) = out_E43_RxYtemp.skaggsMetric.skaggs_real;
-% close all;
-% disp(['E43: ' num2str(i) ' of 50 shuffles done']);
+%     out_E43_ExRtemp = getSkaggs_cutdown([5 2], 'noLog', 1, 'keepTrials', 0, 'E43_ExR_[5_2]_%d.mat', 1, 'C:\Neuroscience\imaging\FINAL\E43_20170802_70per_userSetSD5minDur0.modelingFINAL.mat',  2, {'Evidence', 'Random'}, {[-15:16], []}, {'Position', 'Evidence'}, {[0:10:300], [-15:16]}, 'towers', 'all', 'both');
+%     out_E43_RxYtemp = getSkaggs_cutdown([5 2], 'noLog', 1, 'keepTrials', 0, 'E43_RxY_[5_2]_%d.mat', 1, 'C:\Neuroscience\imaging\FINAL\E43_20170802_70per_userSetSD5minDur0.modelingFINAL.mat',  2, {'Position', 'Random'}, {[0:10:300], []}, {'Evidence', 'Position'}, {[-15:16], [0:10:300]}, 'towers', 'all', 'both');
+%     skaggsDExR_E43(i,:) = out_E43_ExRtemp.skaggsMetric.skaggs_real;
+%     skaggsDRxY_E43(i,:) = out_E43_RxYtemp.skaggsMetric.skaggs_real;
+%     close all;
+%     disp(['E43: ' num2str(i) ' of 50 shuffles done']);
 % end
 % 
+% rng(42);
 % for i=1:50
-% out_E44_ExRtemp = getSkaggs([5 2], 'noLog', 1, 'keepTrials', 0, 'E44_ExR_[5_2]_%d.mat', 1, 'C:\Neuroscience\imaging\FINAL\E44_20171018_50per_userSetSD5minDur0.modelingFINAL.mat',  2, {'Evidence', 'Random'}, {[-15:16], []}, {'Position', 'Evidence'}, {[0:10:300], [-15:16]}, 'towers', 'all', 'both');
-% out_E44_RxYtemp = getSkaggs([5 2], 'noLog', 1, 'keepTrials', 0, 'E44_RxY_[5_2]_%d.mat', 1, 'C:\Neuroscience\imaging\FINAL\E44_20171018_50per_userSetSD5minDur0.modelingFINAL.mat',  2, {'Position', 'Random'}, {[0:10:300], []}, {'Evidence', 'Position'}, {[-15:16], [0:10:300]}, 'towers', 'all', 'both');
-% skaggsDExR_E44(i,:) = out_E44_ExRtemp.skaggsMetric.skaggs_real;
-% skaggsDRxY_E44(i,:) = out_E44_RxYtemp.skaggsMetric.skaggs_real;
-% close all;
-% disp(['E44: ' num2str(i) ' of 50 shuffles done']);
+%     out_E44_ExRtemp = getSkaggs_cutdown([5 2], 'noLog', 1, 'keepTrials', 0, 'E44_ExR_[5_2]_%d.mat', 1, 'C:\Neuroscience\imaging\FINAL\E44_20171018_50per_userSetSD5minDur0.modelingFINAL.mat',  2, {'Evidence', 'Random'}, {[-15:16], []}, {'Position', 'Evidence'}, {[0:10:300], [-15:16]}, 'towers', 'all', 'both');
+%     out_E44_RxYtemp = getSkaggs_cutdown([5 2], 'noLog', 1, 'keepTrials', 0, 'E44_RxY_[5_2]_%d.mat', 1, 'C:\Neuroscience\imaging\FINAL\E44_20171018_50per_userSetSD5minDur0.modelingFINAL.mat',  2, {'Position', 'Random'}, {[0:10:300], []}, {'Evidence', 'Position'}, {[-15:16], [0:10:300]}, 'towers', 'all', 'both');
+%     skaggsDExR_E44(i,:) = out_E44_ExRtemp.skaggsMetric.skaggs_real;
+%     skaggsDRxY_E44(i,:) = out_E44_RxYtemp.skaggsMetric.skaggs_real;
+%     close all;
+%     disp(['E44: ' num2str(i) ' of 50 shuffles done']);
 % end
 % 
+% rng(42);
 % for i=1:50
-% out_E47_ExRtemp = getSkaggs([5 2], 'noLog', 1, 'keepTrials', 0, 'E47_ExR_[5_2]_%d.mat', 1, 'C:\Neuroscience\imaging\FINAL\E47_20170927_70per_userSetSD5minDur0.modelingFINAL.mat',  2, {'Evidence', 'Random'}, {[-15:16], []}, {'Position', 'Evidence'}, {[0:10:300], [-15:16]}, 'towers', 'all', 'both');
-% out_E47_RxYtemp = getSkaggs([5 2], 'noLog', 1, 'keepTrials', 0, 'E47_RxY_[5_2]_%d.mat', 1, 'C:\Neuroscience\imaging\FINAL\E47_20170927_70per_userSetSD5minDur0.modelingFINAL.mat',  2, {'Position', 'Random'}, {[0:10:300], []}, {'Evidence', 'Position'}, {[-15:16], [0:10:300]}, 'towers', 'all', 'both');
-% skaggsDExR_E47(i,:) = out_E47_ExRtemp.skaggsMetric.skaggs_real;
-% skaggsDRxY_E47(i,:) = out_E47_RxYtemp.skaggsMetric.skaggs_real;
-% close all;
-% disp(['E47: ' num2str(i) ' of 50 shuffles done']);
+%     out_E47_ExRtemp = getSkaggs_cutdown([5 2], 'noLog', 1, 'keepTrials', 0, 'E47_ExR_[5_2]_%d.mat', 1, 'C:\Neuroscience\imaging\FINAL\E47_20170927_70per_userSetSD5minDur0.modelingFINAL.mat',  2, {'Evidence', 'Random'}, {[-15:16], []}, {'Position', 'Evidence'}, {[0:10:300], [-15:16]}, 'towers', 'all', 'both');
+%     out_E47_RxYtemp = getSkaggs_cutdown([5 2], 'noLog', 1, 'keepTrials', 0, 'E47_RxY_[5_2]_%d.mat', 1, 'C:\Neuroscience\imaging\FINAL\E47_20170927_70per_userSetSD5minDur0.modelingFINAL.mat',  2, {'Position', 'Random'}, {[0:10:300], []}, {'Evidence', 'Position'}, {[-15:16], [0:10:300]}, 'towers', 'all', 'both');
+%     skaggsDExR_E47(i,:) = out_E47_ExRtemp.skaggsMetric.skaggs_real;
+%     skaggsDRxY_E47(i,:) = out_E47_RxYtemp.skaggsMetric.skaggs_real;
+%     close all;
+%     disp(['E47: ' num2str(i) ' of 50 shuffles done']);
 % end
 % 
+% rng(42);
 % for i=1:50
-% out_E48_ExRtemp = getSkaggs([5 2], 'noLog', 1, 'keepTrials', 0, 'E48_ExR_[5_2]_%d.mat', 1, 'C:\Neuroscience\imaging\FINAL\E48_20170829_70per_userSetSD5minDur0.modelingFINAL.mat',  2, {'Evidence', 'Random'}, {[-15:16], []}, {'Position', 'Evidence'}, {[0:10:300], [-15:16]}, 'towers', 'all', 'both');
-% out_E48_RxYtemp = getSkaggs([5 2], 'noLog', 1, 'keepTrials', 0, 'E48_RxY_[5_2]_%d.mat', 1, 'C:\Neuroscience\imaging\FINAL\E48_20170829_70per_userSetSD5minDur0.modelingFINAL.mat',  2, {'Position', 'Random'}, {[0:10:300], []}, {'Evidence', 'Position'}, {[-15:16], [0:10:300]}, 'towers', 'all', 'both');
-% skaggsDExR_E48(i,:) = out_E48_ExRtemp.skaggsMetric.skaggs_real;
-% skaggsDRxY_E48(i,:) = out_E48_RxYtemp.skaggsMetric.skaggs_real;
-% close all;
-% disp(['E48: ' num2str(i) ' of 50 shuffles done']);
+%     out_E48_ExRtemp = getSkaggs_cutdown([5 2], 'noLog', 1, 'keepTrials', 0, 'E48_ExR_[5_2]_%d.mat', 1, 'C:\Neuroscience\imaging\FINAL\E48_20170829_70per_userSetSD5minDur0.modelingFINAL.mat',  2, {'Evidence', 'Random'}, {[-15:16], []}, {'Position', 'Evidence'}, {[0:10:300], [-15:16]}, 'towers', 'all', 'both');
+%     out_E48_RxYtemp = getSkaggs_cutdown([5 2], 'noLog', 1, 'keepTrials', 0, 'E48_RxY_[5_2]_%d.mat', 1, 'C:\Neuroscience\imaging\FINAL\E48_20170829_70per_userSetSD5minDur0.modelingFINAL.mat',  2, {'Position', 'Random'}, {[0:10:300], []}, {'Evidence', 'Position'}, {[-15:16], [0:10:300]}, 'towers', 'all', 'both');
+%     skaggsDExR_E48(i,:) = out_E48_ExRtemp.skaggsMetric.skaggs_real;
+%     skaggsDRxY_E48(i,:) = out_E48_RxYtemp.skaggsMetric.skaggs_real;
+%     close all;
+%     disp(['E48: ' num2str(i) ' of 50 shuffles done']);
 % end
 % 
+% rng(42);
 % for i=1:50
-% out_E65_ExRtemp = getSkaggs([5 2], 'noLog', 1, 'keepTrials', 0, 'E65_ExR_[5_2]_%d.mat', 1, 'C:\Neuroscience\imaging\FINAL\E65_20180202_60per_userSetSD5minDur0.modelingFINAL.mat',  2, {'Evidence', 'Random'}, {[-15:16], []}, {'Position', 'Evidence'}, {[0:10:300], [-15:16]}, 'towers', 'all', 'both');
-% out_E65_RxYtemp = getSkaggs([5 2], 'noLog', 1, 'keepTrials', 0, 'E65_RxY_[5_2]_%d.mat', 1, 'C:\Neuroscience\imaging\FINAL\E65_20180202_60per_userSetSD5minDur0.modelingFINAL.mat',  2, {'Position', 'Random'}, {[0:10:300], []}, {'Evidence', 'Position'}, {[-15:16], [0:10:300]}, 'towers', 'all', 'both');
-% skaggsDExR_E65(i,:) = out_E65_ExRtemp.skaggsMetric.skaggs_real;
-% skaggsDRxY_E65(i,:) = out_E65_RxYtemp.skaggsMetric.skaggs_real;
-% close all;
-% disp(['E65: ' num2str(i) ' of 50 shuffles done']);
+%     out_E65_ExRtemp = getSkaggs_cutdown([5 2], 'noLog', 1, 'keepTrials', 0, 'E65_ExR_[5_2]_%d.mat', 1, 'C:\Neuroscience\imaging\FINAL\E65_20180202_60per_userSetSD5minDur0.modelingFINAL.mat',  2, {'Evidence', 'Random'}, {[-15:16], []}, {'Position', 'Evidence'}, {[0:10:300], [-15:16]}, 'towers', 'all', 'both');
+%     out_E65_RxYtemp = getSkaggs_cutdown([5 2], 'noLog', 1, 'keepTrials', 0, 'E65_RxY_[5_2]_%d.mat', 1, 'C:\Neuroscience\imaging\FINAL\E65_20180202_60per_userSetSD5minDur0.modelingFINAL.mat',  2, {'Position', 'Random'}, {[0:10:300], []}, {'Evidence', 'Position'}, {[-15:16], [0:10:300]}, 'towers', 'all', 'both');
+%     skaggsDExR_E65(i,:) = out_E65_ExRtemp.skaggsMetric.skaggs_real;
+%     skaggsDRxY_E65(i,:) = out_E65_RxYtemp.skaggsMetric.skaggs_real;
+%     close all;
+%     disp(['E65: ' num2str(i) ' of 50 shuffles done']);
 % end
 
 % Run the analysis
