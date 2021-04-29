@@ -95,16 +95,3 @@ for score_idx = [1,2]
     disp('---')
 end
 
-%% Plot the data
-figure; 
-nieh_barSEM(all_coefs(:,1), all_coefs(:,2))
-ylabel('Decoding index (r)');
-xlabel('PC');
-title(['Manifold Decoding PC1 and PC2 of PCA on ', varTypeList{1}, ' and ', varTypeList{2} ])
-
-
-figure; 
-nieh_barSEMpaired(all_coefs(:,1), all_coefs(:,2))
-ylabel('Decoding index (r)');
-xlabel('PC');
-title(['Manifold Decoding PC1 and PC2 of PCA on ', varTypeList{1}, ' and ', varTypeList{2} ])

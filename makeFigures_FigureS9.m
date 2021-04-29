@@ -1,3 +1,6 @@
 
+%% Triplet plots
 
-%% Everything is generated in the code for Figure 4
+makeOutputTriplets_Metamouse
+
+plotTriplets(outputTriplets_metamouse);

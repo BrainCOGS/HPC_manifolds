@@ -17,8 +17,3 @@ for i = 1:length(pixelwiseInput)
     pixelwiseInput(i).realSigniMap_minusSmall = data;
 end
 
-figure
-histogram(num_peaks, [-0.5:1:6.5], 'Normalization','probability')
-xlabel('number of peaks')
-ylabel('frequency')
-set(gca,'box','off')

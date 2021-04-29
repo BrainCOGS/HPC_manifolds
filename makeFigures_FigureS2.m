@@ -66,26 +66,27 @@ Per_ExYInd  = Per_Yall.*Per_Eall;
 
 figure;
 nieh_barSEMpaired(Per_ExYBoth, Per_ExYInd);
+sourceData_S2f = [Per_ExYBoth' Per_ExYInd'];
 signrank(Per_ExYBoth, Per_ExYInd)
 xticklabels({'p(ExY)', 'p(RxY)*p(ExR)'});
 
 % Venn Diagram
 figure;
 venn([sum(ExYboth)+sum(Yonly) sum(ExYboth)+sum(Eonly)],sum(ExYboth));
+sourceData_S2d = [sum(Yonly) sum(Eonly) sum(ExYboth)];
 sum_Yonly   = sum(Yonly)/sum(totalROI)
 sum_Eonly   = sum(Eonly)/sum(totalROI)
 sum_ExYboth = sum(ExYboth)/sum(totalROI)
 sum_none    = 1-(sum_Yonly+sum_Eonly+sum_ExYboth)
-
-sourceData_S2d = [sum(Yonly) sum(Eonly) sum(ExYboth)];
-sourceData_S2f = [Per_ExYBoth; Per_ExYInd]';
 
 
 %% Find distribution of ExR and RxY skaggs values
 
 fnameStruct = mind_makeFnameStruct('Edward','towers','laptop');
 
-% load("C:\Neuroscience\imaging\FINAL\getSkaggs_Data\out_ExRtemp_and_RxYtemp_FigS2.mat")
+load("C:\Neuroscience\imaging\FINAL\getSkaggs_Data\out_ExY_all.mat");
+
+load("C:\Neuroscience\imaging\FINAL\getSkaggs_Data\out_ExRtemp_and_RxYtemp_FigS2_cutdown.mat")
 % Or run the following
 % Make sure you're in the shuffle folder!!
 
@@ -160,9 +161,6 @@ fnameStruct = mind_makeFnameStruct('Edward','towers','laptop');
 % end
 
 % Run the analysis
-
-% load("C:\Neuroscience\imaging\FINAL\getSkaggs_Data\out_ExY_all.mat");
-
 for i=1:7
     
     if i==1
@@ -221,13 +219,22 @@ for i=1:7
     
 end
 
-sumGood  = 1-sum([skaggsROIAll.lengthROInotBoth])/sum([skaggsROIAll.lengthSig])
-sumFakeE = sum([skaggsROIAll.lengthROInotExR])/sum([skaggsROIAll.lengthSig])
-sumFakeY = sum([skaggsROIAll.lengthROInotRxY])/sum([skaggsROIAll.lengthSig])
+sumGood  = sum([skaggsROIAll.lengthSig]) - sum([skaggsROIAll.lengthROInotBoth]);
+sumFakeE = sum([skaggsROIAll.lengthROInotExR]);
+sumFakeY = sum([skaggsROIAll.lengthROInotRxY]);
+sumSig   = sum([skaggsROIAll.lengthSig]);
+
+perGood = sumGood/sumSig*100
+perFakeE = sumFakeE/sumSig*100
+perFakeY = sumFakeY/sumSig*100
+
+% Check that this is 1, nothing funky happening
+sumGood+sumFakeE+sumFakeY == sum([skaggsROIAll.lengthSig])
 
 figure;
 labels = {'Good' ,'Fake E', 'Fake Y'};
 pie([sumGood sumFakeE sumFakeY], labels);
+sourceData_S2e = [sumFakeE sumFakeY sumGood sumSig];
 
 
 %% Calculate number of fields
@@ -239,5 +246,12 @@ pixelwiseAll_sig = [out_E22_ExY.pixelwise(out_E22_ExY.skaggsMetric.sigROIs) out_
 num_peaks_sig = peak_counterSLIM(pixelwiseAll_sig,9);
 mean(num_peaks_sig)
 nieh_sem(num_peaks_sig)
+
+figure
+histogram(num_peaks_sig, [-0.5:1:6.5], 'Normalization','probability')
+sourceData_S2g = num_peaks_sig';
+xlabel('number of peaks')
+ylabel('frequency')
+set(gca,'box','off')
 
 

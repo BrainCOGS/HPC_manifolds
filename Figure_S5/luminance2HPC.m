@@ -1,12 +1,9 @@
-%%
-fnameStruct = mind_makeFnameStruct('Edward','towers','laptop');
-videopath = '\\192.168.0.233\Neuroscience\schottdorf\E65_trials\';
+function outputLuminance2HPC = luminance2HPC(fnameStruct, videopath, vfilename)
 
 % Get behavioral data for E65 from Edwards files
 
 load(fnameStruct(7).fname) %to get score
 nic_output = extractVariables('all', 2, 'keepTrials', 2, 0, 0, 5, [11 4], fnameStruct(7).fname, 'none', 'towers', 1, 1);
-behavioralVariables = nic_output.behavioralVariables;
 trialn = unique(nic_output.behavioralVariables.Trial)'; 
 
 %% 
@@ -14,14 +11,14 @@ trial_luminance = [];
 trial_position  = [];
 for tt = trialn
         
-    data_thistrial_ed = out.behavioralVariables(out.behavioralVariables.Trial == tt,:);
+    data_thistrial_ed = nic_output.behavioralVariables(nic_output.behavioralVariables.Trial == tt,:);
     
     block = score.trial(tt).block;
     trial = tt - min(find([score.trial.block] == block))+1;
     pos  = score.trial(tt).position;
       
     %Open the file, and measure luminance
-    file = ['hnieh_E65-2018-02-02-B', num2str(block), '-T', num2str(trial), '.mp4'];
+    file = [vfilename, num2str(block), '-T', num2str(trial), '.mp4'];
     v = VideoReader([videopath, file]);
     maxframes = floor( v.Duration * v.FrameRate )-1;
     luminance = zeros(maxframes, 1);
@@ -39,4 +36,7 @@ for tt = trialn
     end
    disp(tt)
 end
+
+outputLuminance2HPC.luminance = luminance;
+outputLuminance2HPC.trial_luminance = trial_luminance;
 

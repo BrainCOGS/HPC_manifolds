@@ -100,8 +100,9 @@ mind_makeTiledMovie(outputTiledFields.manifold3d, outputTiledFields.ROIactivitie
 
 %% Position and evidence gradients
 
+fnameStruct = mind_makeFnameStruct('Edward','towers','laptop');
 load(fnameStruct(7).fname_mani);
-mind_plotManifoldGradients(outMind, fnameStruct(7).fname, 'towers',1)
+outputMindPlotter = mind_plotManifoldGradients(outMind, fnameStruct(7).fname, 'towers',1)
 set(gcf,'renderer','painters');
 
 
@@ -111,35 +112,36 @@ fnameStruct = mind_makeFnameStruct('Edward','towers','laptop');
 
 load("C:\Neuroscience\imaging\FINAL\decoding_Data\decodeEandY_all.mat")
 % Or run the following
-
-dimEmbedList = [2:7];
-for i=1:length(fnameStruct)
-    for j=1:length(dimEmbedList)
-        outputNonlinearDecoding_E = mind_nonlinearDecoding_dimX_All(fnameStruct(i).fname, fnameStruct(i).fname_mani,5,'GP','Evidence','towers',0,1,[], dimEmbedList(j));
-        outputNonlinearDecodingAll_E{i,j} = outputNonlinearDecoding_E;
-        meancorrAll_E(i,j) = outputNonlinearDecoding_E.meancorr;
-        
-        outputNonlinearDecoding_Y = mind_nonlinearDecoding_dimX_All(fnameStruct(i).fname, fnameStruct(i).fname_mani,5,'GP','Position','towers',0,1,[], dimEmbedList(j));
-        outputNonlinearDecodingAll_Y{i,j} = outputNonlinearDecoding_Y;
-        meancorrAll_Y(i,j) = outputNonlinearDecoding_Y.meancorr;
-        
-        disp(['Animal ' num2str(i) ' of ' num2str(length(fnameStruct)) ', dim ' num2str(dimEmbedList(j)) ' finished']);
-    end
-    
-    outputNonlinearDecoding_ROIs_E = mind_nonlinearDecoding_dimX_All(fnameStruct(i).fname, fnameStruct(i).fname_mani,5,'GP','Evidence','towers',0,0,[],[]);
-    outputNonlinearDecoding_ROIsAll_E{i,j} = outputNonlinearDecoding_ROIs_E;
-    meancorrROIsAll_E(i) = outputNonlinearDecoding_ROIs_E.meancorr;
-    
-    outputNonlinearDecoding_ROIs_Y = mind_nonlinearDecoding_dimX_All(fnameStruct(i).fname, fnameStruct(i).fname_mani,5,'GP','Position','towers',0,0,[],[]);
-    outputNonlinearDecoding_ROIsAll_Y{i,j} = outputNonlinearDecoding_ROIs_Y;
-    meancorrROIsAll_Y(i) = outputNonlinearDecoding_ROIs_Y.meancorr;
-    
-    disp(['Animal ' num2str(i) ' of ' num2str(length(fnameStruct)) ', ROI finished']);
-end
+% 
+% dimEmbedList = [2:7];
+% for i=1:length(fnameStruct)
+%     for j=1:length(dimEmbedList)
+%         outputNonlinearDecoding_E = mind_nonlinearDecoding_dimX_All(fnameStruct(i).fname, fnameStruct(i).fname_mani,5,'GP','Evidence','towers',0,1,[], dimEmbedList(j));
+%         outputNonlinearDecodingAll_E{i,j} = outputNonlinearDecoding_E;
+%         meancorrAll_E(i,j) = outputNonlinearDecoding_E.meancorr;
+%         
+%         outputNonlinearDecoding_Y = mind_nonlinearDecoding_dimX_All(fnameStruct(i).fname, fnameStruct(i).fname_mani,5,'GP','Position','towers',0,1,[], dimEmbedList(j));
+%         outputNonlinearDecodingAll_Y{i,j} = outputNonlinearDecoding_Y;
+%         meancorrAll_Y(i,j) = outputNonlinearDecoding_Y.meancorr;
+%         
+%         disp(['Animal ' num2str(i) ' of ' num2str(length(fnameStruct)) ', dim ' num2str(dimEmbedList(j)) ' finished']);
+%     end
+%     
+%     outputNonlinearDecoding_ROIs_E = mind_nonlinearDecoding_dimX_All(fnameStruct(i).fname, fnameStruct(i).fname_mani,5,'GP','Evidence','towers',0,0,[],[]);
+%     outputNonlinearDecoding_ROIsAll_E{i,j} = outputNonlinearDecoding_ROIs_E;
+%     meancorrROIsAll_E(i) = outputNonlinearDecoding_ROIs_E.meancorr;
+%     
+%     outputNonlinearDecoding_ROIs_Y = mind_nonlinearDecoding_dimX_All(fnameStruct(i).fname, fnameStruct(i).fname_mani,5,'GP','Position','towers',0,0,[],[]);
+%     outputNonlinearDecoding_ROIsAll_Y{i,j} = outputNonlinearDecoding_ROIs_Y;
+%     meancorrROIsAll_Y(i) = outputNonlinearDecoding_ROIs_Y.meancorr;
+%     
+%     disp(['Animal ' num2str(i) ' of ' num2str(length(fnameStruct)) ', ROI finished']);
+% end
 
 figure; 
 subplot(1,2,1)
 nieh_barSEM(meancorrAll_Y, meancorrROIsAll_Y);
+sourceData_3g_Y = [meancorrAll_Y' ; meancorrROIsAll_Y];
 hold on;
         scatter([ones(length(fnameStruct),1); ...
                  ones(length(fnameStruct),1)*2; ...
@@ -148,7 +150,7 @@ hold on;
                  ones(length(fnameStruct),1)*5; ...
                  ones(length(fnameStruct),1)*6; ...
                  ones(length(fnameStruct),1)*7; ...
-                 ],[meancorrAll_Y(:); meancorrROIsAll_Y']);
+                 ],[meancorrAll_Y(:); meancorrROIsAll_Y'], '.');
 ylabel('Decoding Index (r)');
 xticklabels({'2', '3', '4', '5', '6', '7', 'ROIs'});
 xlabel('# Dims embedded, last bar is ROIs');
@@ -157,6 +159,7 @@ set(gca, 'box', 'off')
 
 subplot(1,2,2)
 nieh_barSEM(meancorrAll_E, meancorrROIsAll_E);
+sourceData_3g_E = [meancorrAll_E' ; meancorrROIsAll_E];
 hold on;
         scatter([ones(length(fnameStruct),1); ...
                  ones(length(fnameStruct),1)*2; ...
@@ -165,7 +168,7 @@ hold on;
                  ones(length(fnameStruct),1)*5; ...
                  ones(length(fnameStruct),1)*6; ...
                  ones(length(fnameStruct),1)*7; ...
-                 ],[meancorrAll_E(:); meancorrROIsAll_E']);
+                 ],[meancorrAll_E(:); meancorrROIsAll_E'], '.');
 ylabel('Decoding Index (r)');
 xticklabels({'2', '3', '4', '5', '6', '7', 'ROIs'});
 xlabel('# Dims embedded, last bar is ROIs');
@@ -177,7 +180,6 @@ set(gca, 'box', 'off')
 
 fnameStruct = mind_makeFnameStruct('Edward','towers','laptop');
 
-% Run the code above or
 load("C:\Neuroscience\imaging\FINAL\decoding_Data\decodeEandY_all.mat")
 
 % index of 4 means 5 dim

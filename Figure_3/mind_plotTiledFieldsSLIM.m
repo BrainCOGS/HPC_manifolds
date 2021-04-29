@@ -57,8 +57,10 @@ hold on;
 ROInonzero = find(ROIactivities_thres(:,curROI));
 ROIzero    = boolean(ones(length(ROIactivities_thres),1));
 ROIzero(ROInonzero) = 0;
-h = scatter3(manifold3d(ROInonzero,1), manifold3d(ROInonzero,2), manifold3d(ROInonzero,3), 20, ROIactivities_thres(ROInonzero,curROI),'filled', 'MarkerEdgeColor', [0.8, 0.8, 0.8]);
-h2 = scatter3(manifold3d(ROIzero,1), manifold3d(ROIzero,2), manifold3d(ROIzero,3), 20, 'filled', 'MarkerFaceColor', [.8 .8 .8], 'MarkerFaceAlpha', .05);
+h          = scatter3(manifold3d(ROInonzero,1),manifold3d(ROInonzero,2),manifold3d(ROInonzero,3), 20, ROIactivities_thres(ROInonzero,curROI),'filled', 'MarkerEdgeColor', [0.8, 0.8, 0.8]);
+sourceData_3d_cell = [manifold3d(ROInonzero,1) manifold3d(ROInonzero,2) manifold3d(ROInonzero,3)      ROIactivities_thres(ROInonzero,curROI)];
+h2         = scatter3(manifold3d(ROIzero,1),manifold3d(ROIzero,2),manifold3d(ROIzero,3), 20, 'filled', 'MarkerFaceColor', [.8 .8 .8], 'MarkerFaceAlpha', .05);
+sourceData_3d_grey = [manifold3d(ROIzero,1) manifold3d(ROIzero,2) manifold3d(ROIzero,3)];
 colormap(cmap_firingfield);
 caxis([0 2]);
 xlim([-0.07,0.07])
@@ -81,9 +83,11 @@ for i=1:length(plotROI)
     hold on;
     ROInonzero = find(ROIactivities_thres(:,curROI));
     ROIzeroALL(ROInonzero) = 0;
-    h = scatter3(manifold3d(ROInonzero,1), manifold3d(ROInonzero,2), manifold3d(ROInonzero,3), 20, colors(i,:),'filled', 'MarkerEdgeColor', [0.8, 0.8, 0.8]);
+    h             = scatter3(manifold3d(ROInonzero,1),manifold3d(ROInonzero,2),manifold3d(ROInonzero,3), 20, colors(i,:),'filled', 'MarkerEdgeColor', [0.8, 0.8, 0.8]);
+    sourceData_3e_cell{i} = [manifold3d(ROInonzero,1) manifold3d(ROInonzero,2) manifold3d(ROInonzero,3)];
 end
-h2 = scatter3(manifold3d(ROIzeroALL,1), manifold3d(ROIzeroALL,2), manifold3d(ROIzeroALL,3), 20, 'filled', 'MarkerFaceColor', [.8 .8 .8], 'MarkerFaceAlpha', .05);
+h2         = scatter3(manifold3d(ROIzeroALL,1),manifold3d(ROIzeroALL,2),manifold3d(ROIzeroALL,3), 20, 'filled', 'MarkerFaceColor', [.8 .8 .8], 'MarkerFaceAlpha', .05);
+sourceData_3e_grey = [manifold3d(ROIzeroALL,1) manifold3d(ROIzeroALL,2) manifold3d(ROIzeroALL,3)];
 colormap(cmap_firingfield);
 caxis([0 2]);
 xlim([-0.07,0.07])
@@ -102,3 +106,7 @@ set(gcf,'renderer','painters');
 
 outputTiledFields.manifold3d = manifold3d;
 outputTiledFields.ROIactivities_thres = ROIactivities_thres;
+outputTiledFields.sourceData_3d_cell = sourceData_3d_cell;
+outputTiledFields.sourceData_3d_grey = sourceData_3d_grey;
+outputTiledFields.sourceData_3e_cell = sourceData_3e_cell;
+outputTiledFields.sourceData_3e_grey = sourceData_3e_grey;

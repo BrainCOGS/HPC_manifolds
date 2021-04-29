@@ -20,9 +20,7 @@ sourceData_S4d = plot_allTrials_reconstructionMultipleROIs_Function(outputRecons
 % Editted code to fix the idim starting at 1, but this dataset has the 
 % additional column, so I manually editted out the extra column and saved
 % as the data from the folder: C:\Neuroscience\imaging\FINAL\reconstructROIs_Data
-
 % outputReconstructionMultipleROIs_E43 = collect_allTrials_reconstructionMultipleROIs_Function(fnameStruct, '\\192.168.0.233\Neuroscience\CrossValidation_holdOneCell\', 'E43', [2 6 8 9 14 20 26 28 31 34]);
-
 % for i=1:length(fnameStruct)
 %     if i==3
 %         outputReconstructionMultipleROIs{i} = collect_allTrials_reconstructionMultipleROIs_Function(fnameStruct, '\\192.168.0.233\Neuroscience\CrossValidation_holdOneCell\', i, [2 6 8 9 14 20 26 28 31 34]);
@@ -36,7 +34,13 @@ sourceData_S4d = plot_allTrials_reconstructionMultipleROIs_Function(outputRecons
 % end
 % OLD END *************************************************
 
-% Load the data from the folder: C:\Neuroscience\imaging\FINAL\reconstructROIs_Data
+load('C:\Neuroscience\imaging\FINAL\reconstructROIs_Data\outputReconstructionMultipleROIs_E22_spock.mat')
+load('C:\Neuroscience\imaging\FINAL\reconstructROIs_Data\outputReconstructionMultipleROIs_E39_spock.mat')
+load('C:\Neuroscience\imaging\FINAL\reconstructROIs_Data\outputReconstructionMultipleROIs_E43_spock.mat')
+load('C:\Neuroscience\imaging\FINAL\reconstructROIs_Data\outputReconstructionMultipleROIs_E44_spock.mat')
+load('C:\Neuroscience\imaging\FINAL\reconstructROIs_Data\outputReconstructionMultipleROIs_E47_spock.mat')
+load('C:\Neuroscience\imaging\FINAL\reconstructROIs_Data\outputReconstructionMultipleROIs_E48_spock.mat')
+load('C:\Neuroscience\imaging\FINAL\reconstructROIs_Data\outputReconstructionMultipleROIs_E65_spock.mat')
 
 fnameStruct = mind_makeFnameStruct('Edward','towers','laptop');
 
@@ -50,6 +54,7 @@ corrAll(7,:) = mean(outputReconstructionMultipleROIs_E65.corrAll,1);
 
 figure;
 nieh_barSEM(corrAll);
+sourceData_S4e = corrAll';
 hold on;
         scatter([ones(length(fnameStruct),1); ...
                  ones(length(fnameStruct),1)*2; ...

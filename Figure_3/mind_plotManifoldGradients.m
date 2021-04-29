@@ -50,10 +50,12 @@ meanFR = mean(ROIactivities, 2);
 
 outputMindPlotter.manifold3d = manifold3d;
 outputMindPlotter.dimEmbed = dimEmbed;
-outputMindPlotter.smooth_Y = smooth_Y;
+outputMindPlotter.smooth_Y = smooth_Y';
+
 if strcmp(taskType, 'towers')==1 || strcmp(taskType, 'tower')==1 || strcmp(taskType, 'Towers')==1 || strcmp(taskType, 'T7')==1
-    outputMindPlotter.smooth_E = smooth_E;
+    outputMindPlotter.smooth_E = smooth_E';
 end
+outputMindPlotter.smooth_V = smooth_V';
 outputMindPlotter.Choice1 = Choice1;
 
 if togglePlot==1

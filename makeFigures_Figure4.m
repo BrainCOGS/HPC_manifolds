@@ -24,6 +24,8 @@ load('C:\Neuroscience\imaging\FINAL\sequences_Data\outputDoubletsTriplets_all.ma
 
 %% Plot the example doublets (Fig. 4a)
 
+fnameStruct = mind_makeFnameStruct('Edward','towers','laptop');
+
 load('C:\Neuroscience\imaging\FINAL\sequences_Data\outputDoubletsTriplets_all.mat')
 load(fnameStruct(2).fname);
 deltaT = score.deltaT;
@@ -31,17 +33,17 @@ deltaT = score.deltaT;
 % ****************IMPORTANT***************************************
 % Need to manually delete the zeros at the end because of how matlab
 % generates the cell arrays
-sourceData_4a_ex1 = plotSequenceTrialROI(219,outputDoublets_E39, fnameStruct(2).fname, deltaT);
-sourceData_4a_ex2 = plotSequenceTrialROI(122,outputDoublets_E39, fnameStruct(2).fname, deltaT);
+[sourceData_4a_ex1_Time, sourceData_4a_ex1_Position] = plotSequenceTrialROI(219,outputDoublets_E39, fnameStruct(2).fname, deltaT);
+[sourceData_4a_ex2_Time, sourceData_4a_ex2_Position] = plotSequenceTrialROI(122,outputDoublets_E39, fnameStruct(2).fname, deltaT);
 
 
 %% Make the metamouse and generate plots (Fig. 4b-c, f-j 
 
-makeOutputDoublets_Metamouse
-makeOutputTriplets_Metamouse
+load('C:\Neuroscience\imaging\FINAL\sequences_Data\outputDoubletsTriplets_all.mat')
 
-plotDoublets(outputDoublets_metamouse);
-plotTriplets(outputTriplets_metamouse);
+makeOutputDoublets_Metamouse
+
+outputPlotDoublets = plotDoublets(outputDoublets_metamouse);
 
 
 %% To plot the trajectory between two cells in doublets (Fig. 4d)

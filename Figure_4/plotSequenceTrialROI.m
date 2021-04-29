@@ -1,4 +1,4 @@
-function sourceData = plotSequenceTrialROI(doubletNum, outputDoublets, fname, timestep)
+function [sourceData_4a_Time, sourceData_4a_Position] = plotSequenceTrialROI(doubletNum, outputDoublets, fname, timestep)
 
 %roi1 is in normal values, not global
 
@@ -29,7 +29,8 @@ trialn = behavioralVariables.Trial;
 figure;
 subplot(1,2,1)
 hold on;
-for j=1:length(numtrial)   
+sCount = 1;
+for j=1:length(numtrial)
     hold on
     for i=1:length(roi1)
         plotdata = ROI_time(trialn==aTrials(numtrial(j)),i);%score.dataDFF(begin1:end1,roi1(i));
@@ -38,13 +39,18 @@ for j=1:length(numtrial)
         xdata = [0:1:length(plotdata_norm)-1].*timestep;
         if i==1
             plot(xdata,plotdata_norm+(1*j),'Color', [.9 .5 .1])
-            sourceData_4a_Time_cell1_y(1:length(plotdata_norm),j) = plotdata_norm+(1*j);
-            sourceData_4a_Time_cell1_x(1:length(plotdata_norm),j) = xdata;
+            %             sourceData_4a_Time_cell1_y(1:length(plotdata_norm),j) = plotdata_norm+(1*j);
+            %             sourceData_4a_Time_cell1_x(1:length(plotdata_norm),j) = xdata;
         else
             plot(xdata,plotdata_norm+(1*j),'Color', [0 .5 0])
-            sourceData_4a_Time_cell2_y(1:length(plotdata_norm),j) = plotdata_norm+(1*j);
-            sourceData_4a_Time_cell2_x(1:length(plotdata_norm),j) = xdata;
+            %             sourceData_4a_Time_cell2_y(1:length(plotdata_norm),j) = plotdata_norm+(1*j);
+            %             sourceData_4a_Time_cell2_x(1:length(plotdata_norm),j) = xdata;
         end
+        sourceData_4a_Time(1:length(plotdata_norm),sCount) = xdata;
+        sCount = sCount + 1;
+        sourceData_4a_Time(1:length(plotdata_norm),sCount) = plotdata_norm+(1*j);
+        sCount = sCount + 1;
+        
         ylim([0 length(numtrial)+1]);
         xlim([0 7]);
     end
@@ -52,6 +58,7 @@ end
 
 subplot(1,2,2)
 hold on
+sCount = 1;
 for j=1:length(numtrial)
     hold on
     for i=1:length(roi1)
@@ -60,26 +67,21 @@ for j=1:length(numtrial)
         plotdata_normY = plotdata_smoothY(:,j,i)/(max(plotdata_smoothY(:,j,i)));
         if i==1
             plot([0:100],plotdata_normY+(1*j),'Color', [.9 .5 .1])
-            sourceData_4a_Pos_cell1_y(1:length(plotdata_normY),j) = plotdata_normY+(1*j);
-            sourceData_4a_Pos_cell1_x(1:length(plotdata_normY),j) = [0:100].*(1/3);
+            %             sourceData_4a_Pos_cell1_y(1:length(plotdata_normY),j) = plotdata_normY+(1*j);
+            %             sourceData_4a_Pos_cell1_x(1:length(plotdata_normY),j) = [0:100].*3;
         else
             plot([0:100],plotdata_normY+(1*j),'Color', [0 .5 0])
-            sourceData_4a_Pos_cell2_y(1:length(plotdata_normY),j) = plotdata_normY+(1*j);
-            sourceData_4a_Pos_cell2_x(1:length(plotdata_normY),j) = [0:100].*(1/3);
+            %             sourceData_4a_Pos_cell2_y(1:length(plotdata_normY),j) = plotdata_normY+(1*j);
+            %             sourceData_4a_Pos_cell2_x(1:length(plotdata_normY),j) = [0:100].*3;
         end
+        sourceData_4a_Position(1:length(plotdata_normY),sCount) = [0:100].*3;
+        sCount = sCount + 1;
+        sourceData_4a_Position(1:length(plotdata_normY),sCount) = plotdata_normY+(1*j);
+        sCount = sCount + 1;
+        
         ylim([0 length(numtrial)+1]);
         xticks([0 33.33333 66.66667 100]);
         xticklabels({'0', '100' , '200', '300'})
     end
 end
 suptitle(num2str(roi1));
-
-sourceData.sourceData_4a_Time_cell1_x = sourceData_4a_Time_cell1_x;
-sourceData.sourceData_4a_Time_cell1_y = sourceData_4a_Time_cell1_y;
-sourceData.sourceData_4a_Time_cell2_x = sourceData_4a_Time_cell2_x;
-sourceData.sourceData_4a_Time_cell2_y = sourceData_4a_Time_cell2_y;
-sourceData.sourceData_4a_Pos_cell1_x = sourceData_4a_Pos_cell1_x;
-sourceData.sourceData_4a_Pos_cell1_y = sourceData_4a_Pos_cell1_y;
-sourceData.sourceData_4a_Pos_cell2_x = sourceData_4a_Pos_cell2_x;
-sourceData.sourceData_4a_Pos_cell2_y = sourceData_4a_Pos_cell2_y;
-

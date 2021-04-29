@@ -74,13 +74,39 @@ sourceData_S6d = all_coefs;
 %% Decode the PC1 and PC2 of E and VA from 5-dim manifold
 
 fnameStruct = mind_makeFnameStruct('Edward','towers','laptop');
+varTypeList = {'Evidence', 'ViewAngle'};
 
-outputRegressOutViewAngle1_EandVA = mind_decodePCAVariable(fnameStruct,'towers', {'Evidence', 'ViewAngle'});
+load("C:\Neuroscience\imaging\FINAL\decoding_Data\decodePC1and2_EandVA.mat")
+% Or run this code:
+% outputRegressOutViewAngle1_EandVA = mind_decodePCAVariable(fnameStruct,'towers', varTypeList);
 
+figure; 
+nieh_barSEMpaired(outputRegressOutViewAngle1_EandVA.all_coefs(:,1), outputRegressOutViewAngle1_EandVA.all_coefs(:,2))
+sourceData_S6e = outputRegressOutViewAngle1_EandVA.all_coefs;
+ylabel('Decoding index (r)');
+xlabel('PC');
+set(gca, 'box', 'off')
+title(['Manifold Decoding PC1 and PC2 of PCA on ', varTypeList{1}, ' and ', varTypeList{2} ])
 
 %% Comparing decoding of View Angle in Alternation Task vs Towers task
 
-mind_script_compareTowersAlternateViewAngleSLIM;
+fnameStruct_Alternation = mind_makeFnameStruct('Edward','Alternation','NONE');
+fnameStruct = mind_makeFnameStruct('Edward','towers','laptop');
+
+load("C:\Neuroscience\imaging\FINAL\decoding_Data\decodeVATowersAlternation.mat");
+% Or run this code:
+% outputCompareTowersAlternationVA = mind_compareTowersAlternationVA(fnameStruct, fnameStruct_Alternation);
+
+figure;
+nieh_barSEM(outputCompareTowersAlternationVA.meancorrAll_VA, outputCompareTowersAlternationVA.meancorrAll_VA_ALT);
+sourceData_S6f = [outputCompareTowersAlternationVA.meancorrAll_VA' outputCompareTowersAlternationVA.meancorrAll_VA_ALT'];
+hold on;
+scatter([ones(length(outputCompareTowersAlternationVA.meancorrAll_VA),1); ones(length(outputCompareTowersAlternationVA.meancorrAll_VA_ALT),1)*2],[outputCompareTowersAlternationVA.meancorrAll_VA outputCompareTowersAlternationVA.meancorrAll_VA_ALT], '.');
+xticklabels({'Towers - View Angle', 'Alternation - View Angle'});
+xtickangle(45)
+ylabel('Decoding index (r)');
+set(gca, 'box', 'off')
+title(['Rank sum p-value is: ' num2str(ranksum(outputCompareTowersAlternationVA.meancorrAll_VA, outputCompareTowersAlternationVA.meancorrAll_VA_ALT))]);
 
 
 %% Distributions of View Angle values (histogram version)
@@ -136,6 +162,7 @@ rng(1)
 tow_CI = nieh_ci(prob1,1000);
 alt_CI = nieh_ci(prob1A,1000);
 
+% Flip it to make it work in shadedErrorBar
 tow_CI_fixed = [tow_CI(2,:); tow_CI(1,:)];
 alt_CI_fixed = [alt_CI(2,:); alt_CI(1,:)];
 
@@ -151,6 +178,10 @@ shadedErrorBar(centers,mean1,tow_CI_fixed,'lineProps', 'b');
 shadedErrorBar(centers,mean1A,alt_CI_fixed,'lineProps', 'r'); 
 plot(centers,prob1A','g')
 plot(centers,prob1','y')
+sourceData_S6h_Tow_mean = [centers' mean1'  tow_CI_fixed(2,:)' tow_CI_fixed(1,:)'];
+sourceData_S6h_Tow_ind  = prob1';
+sourceData_S6h_Alt_mean = [centers' mean1A' alt_CI_fixed(2,:)' alt_CI_fixed(1,:)'];
+sourceData_S6h_Alt_ind  = prob1A';
 legend('Towers','Alternation');
 xlabel('View Angle');
 ylabel('Probability');
@@ -181,39 +212,52 @@ plot([1:31],mean(outputMakeVAPlot.meanR),'Color', 'g','LineWidth', 3);
 plot([1:31],mean(outputMakeVAPlot_Alternation.meanL),'Color', 'r','LineWidth', 3);
 plot([1:31],mean(outputMakeVAPlot_Alternation.meanR),'Color', 'r','LineWidth', 3);
 
+sourceData_S6g_Tow_meanL =  mean(outputMakeVAPlot.meanL)';
+sourceData_S6g_Tow_meanR =  mean(outputMakeVAPlot.meanR)';
+sourceData_S6g_Alt_meanL =  mean(outputMakeVAPlot_Alternation.meanL)';
+sourceData_S6g_Alt_meanR =  mean(outputMakeVAPlot_Alternation.meanR)';
+sourceData_S6g_Position  = [0:10:300]';
+sourceData_S6g_Tow_indL  = outputMakeVAPlot.meanL';
+sourceData_S6g_Tow_indR  = outputMakeVAPlot.meanR';
+sourceData_S6g_Alt_indL  = outputMakeVAPlot_Alternation.meanL';
+sourceData_S6g_Alt_indR  = outputMakeVAPlot_Alternation.meanR';
+
 xlim([1 31])
 ylim([-80 80])
 xticks([1 11 21 31])
 xticklabels({'0' , '100', '200', '300'});
 xlabel('Position (cm)');
 ylabel('View Angle (degrees)');
-title('Shaded area is 95% CI, Green=Towers, Red=Alternation');
+title('Green=Towers, Red=Alternation');
 
 
 %% Binary Decoding
 
-
 fnameStruct = mind_makeFnameStruct('Edward','towers','laptop');
 
-% Can run this on the laptop OR use the spock code below
-outputNonlinearDecoding_VarGroup_Binary_dim2 = mind_nonlinearDecoding_VarGroup(fnameStruct, 5, 'GP', {'Choice', 'PriorChoice','PriorCorrect'}, 'towers', 0, 1, 2);
-outputNonlinearDecoding_VarGroup_Binary_dim3 = mind_nonlinearDecoding_VarGroup(fnameStruct, 5, 'GP', {'Choice', 'PriorChoice','PriorCorrect'}, 'towers', 0, 1, 3);
-save('outputNonlinearDecoding_BinaryVariables_withPosVal.mat', '-v7.3');
-outputNonlinearDecoding_VarGroup_Binary_dim4 = mind_nonlinearDecoding_VarGroup(fnameStruct, 5, 'GP', {'Choice', 'PriorChoice','PriorCorrect'}, 'towers', 0, 1, 4);
-outputNonlinearDecoding_VarGroup_Binary_dim5 = mind_nonlinearDecoding_VarGroup(fnameStruct, 5, 'GP', {'Choice', 'PriorChoice','PriorCorrect'}, 'towers', 0, 1, 5);
-save('outputNonlinearDecoding_BinaryVariables_withPosVal.mat', '-v7.3');
-outputNonlinearDecoding_VarGroup_Binary_dim6 = mind_nonlinearDecoding_VarGroup(fnameStruct, 5, 'GP', {'Choice', 'PriorChoice','PriorCorrect'}, 'towers', 0, 1, 6);
-outputNonlinearDecoding_VarGroup_Binary_dim7 = mind_nonlinearDecoding_VarGroup(fnameStruct, 5, 'GP', {'Choice', 'PriorChoice','PriorCorrect'}, 'towers', 0, 1, 7);
-save('outputNonlinearDecoding_BinaryVariables_withPosVal.mat', '-v7.3');
+load('C:\Neuroscience\imaging\FINAL\decoding_Data\decodeBinary_all.mat')
 
+% Or run this code
+% outputNonlinearDecoding_VarGroup_Binary_dim2 = mind_nonlinearDecoding_VarGroup(fnameStruct, 5, 'GP', {'Choice', 'PriorChoice','PriorCorrect'}, 'towers', 0, 1, 2);
+% outputNonlinearDecoding_VarGroup_Binary_dim3 = mind_nonlinearDecoding_VarGroup(fnameStruct, 5, 'GP', {'Choice', 'PriorChoice','PriorCorrect'}, 'towers', 0, 1, 3);
+% save('outputNonlinearDecoding_BinaryVariables_withPosVal.mat', '-v7.3');
+% outputNonlinearDecoding_VarGroup_Binary_dim4 = mind_nonlinearDecoding_VarGroup(fnameStruct, 5, 'GP', {'Choice', 'PriorChoice','PriorCorrect'}, 'towers', 0, 1, 4);
+% outputNonlinearDecoding_VarGroup_Binary_dim5 = mind_nonlinearDecoding_VarGroup(fnameStruct, 5, 'GP', {'Choice', 'PriorChoice','PriorCorrect'}, 'towers', 0, 1, 5);
+% save('outputNonlinearDecoding_BinaryVariables_withPosVal.mat', '-v7.3');
+% outputNonlinearDecoding_VarGroup_Binary_dim6 = mind_nonlinearDecoding_VarGroup(fnameStruct, 5, 'GP', {'Choice', 'PriorChoice','PriorCorrect'}, 'towers', 0, 1, 6);
+% outputNonlinearDecoding_VarGroup_Binary_dim7 = mind_nonlinearDecoding_VarGroup(fnameStruct, 5, 'GP', {'Choice', 'PriorChoice','PriorCorrect'}, 'towers', 0, 1, 7);
+% save('outputNonlinearDecoding_BinaryVariables_withPosVal.mat', '-v7.3');
+
+% *************** OLD ***************************
 % For the individual points figures, used the .sh file on spock
 % sbatch --time=300 --mem=60000 -c 4  -o "/jukebox/tank/enieh/mind/logs/mind_nonlinearDecoding_VarGroup_dim7_%j.log" -p all /jukebox/tank/enieh/mind/OLD_Unused/mind_nonlinearDecoding_VarGroup_dim7.sh
-load('M:\enieh\mind\outputNonlinearDecoding_VarGroup_Binary_dim4.mat')
-load('M:\enieh\mind\outputNonlinearDecoding_VarGroup_Binary_dim5.mat')
-load('M:\enieh\mind\outputNonlinearDecoding_VarGroup_Binary_dim2.mat')
-load('M:\enieh\mind\outputNonlinearDecoding_VarGroup_Binary_dim3.mat')
-load('M:\enieh\mind\outputNonlinearDecoding_VarGroup_Binary_dim7.mat')
-load('M:\enieh\mind\outputNonlinearDecoding_VarGroup_Binary_dim6.mat')
+% load('M:\enieh\mind\outputNonlinearDecoding_VarGroup_Binary_dim4.mat')
+% load('M:\enieh\mind\outputNonlinearDecoding_VarGroup_Binary_dim5.mat')
+% load('M:\enieh\mind\outputNonlinearDecoding_VarGroup_Binary_dim2.mat')
+% load('M:\enieh\mind\outputNonlinearDecoding_VarGroup_Binary_dim3.mat')
+% load('M:\enieh\mind\outputNonlinearDecoding_VarGroup_Binary_dim7.mat')
+% load('M:\enieh\mind\outputNonlinearDecoding_VarGroup_Binary_dim6.mat')
+% ****************** OLD END ************************
 
 % Make the plot
 figure;
@@ -224,6 +268,12 @@ nieh_barSEM(outputNonlinearDecoding_VarGroup_Binary_dim2(1).meancorPerList, ...
             outputNonlinearDecoding_VarGroup_Binary_dim5(1).meancorPerList, ...
             outputNonlinearDecoding_VarGroup_Binary_dim6(1).meancorPerList, ...
             outputNonlinearDecoding_VarGroup_Binary_dim7(1).meancorPerList);
+sourceData_S6i_Choice = [outputNonlinearDecoding_VarGroup_Binary_dim2(1).meancorPerList*100; ...
+                         outputNonlinearDecoding_VarGroup_Binary_dim3(1).meancorPerList*100; ...
+                         outputNonlinearDecoding_VarGroup_Binary_dim4(1).meancorPerList*100; ...
+                         outputNonlinearDecoding_VarGroup_Binary_dim5(1).meancorPerList*100; ...
+                         outputNonlinearDecoding_VarGroup_Binary_dim6(1).meancorPerList*100; ...
+                         outputNonlinearDecoding_VarGroup_Binary_dim7(1).meancorPerList*100];
         hold on;
         scatter([ones(length(fnameStruct),1); ...
                  ones(length(fnameStruct),1)*2; ...
@@ -253,6 +303,12 @@ nieh_barSEM(outputNonlinearDecoding_VarGroup_Binary_dim2(2).meancorPerList, ...
             outputNonlinearDecoding_VarGroup_Binary_dim5(2).meancorPerList, ...
             outputNonlinearDecoding_VarGroup_Binary_dim6(2).meancorPerList, ...
             outputNonlinearDecoding_VarGroup_Binary_dim7(2).meancorPerList);
+sourceData_S6i_PrevChoice = [outputNonlinearDecoding_VarGroup_Binary_dim2(2).meancorPerList*100; ...
+                             outputNonlinearDecoding_VarGroup_Binary_dim3(2).meancorPerList*100; ...
+                             outputNonlinearDecoding_VarGroup_Binary_dim4(2).meancorPerList*100; ...
+                             outputNonlinearDecoding_VarGroup_Binary_dim5(2).meancorPerList*100; ...
+                             outputNonlinearDecoding_VarGroup_Binary_dim6(2).meancorPerList*100; ...
+                             outputNonlinearDecoding_VarGroup_Binary_dim7(2).meancorPerList*100];        
         hold on;
         scatter([ones(length(fnameStruct),1); ...
                  ones(length(fnameStruct),1)*2; ...
@@ -281,6 +337,12 @@ nieh_barSEM(outputNonlinearDecoding_VarGroup_Binary_dim2(3).meancorPerList, ...
             outputNonlinearDecoding_VarGroup_Binary_dim5(3).meancorPerList, ...
             outputNonlinearDecoding_VarGroup_Binary_dim6(3).meancorPerList, ...
             outputNonlinearDecoding_VarGroup_Binary_dim7(3).meancorPerList);
+sourceData_S6i_PrevCorrect = [outputNonlinearDecoding_VarGroup_Binary_dim2(3).meancorPerList*100; ...
+                              outputNonlinearDecoding_VarGroup_Binary_dim3(3).meancorPerList*100; ...
+                              outputNonlinearDecoding_VarGroup_Binary_dim4(3).meancorPerList*100; ...
+                              outputNonlinearDecoding_VarGroup_Binary_dim5(3).meancorPerList*100; ...
+                              outputNonlinearDecoding_VarGroup_Binary_dim6(3).meancorPerList*100; ...
+                              outputNonlinearDecoding_VarGroup_Binary_dim7(3).meancorPerList*100];                
         hold on;
         scatter([ones(length(fnameStruct),1); ...
                  ones(length(fnameStruct),1)*2; ...
